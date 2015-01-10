@@ -8,12 +8,9 @@
     }
 
     describe('core/util/date', function() {
-
         describe('parse', function() {
             it('Basic date parse', function() {
-				var start = new Date();
 				var date = fecha.parse('2012/05/03', 'YYYY/MM/DD');
-				console.log(new Date() - start);
                 expect(date).toEqual(new Date(2012, 4, 3));
             });
             it('Basic date parse with time', function() {
@@ -60,6 +57,12 @@
 			});
 			it('milliseconds time', function() {
 				expect(fecha.parse('10:20:30.123', 'HH:mm:ss.SSS')).toEqual(new Date(2015, 0, 1, 10, 20, 30, 123));
+			});
+			it('milliseconds medium', function() {
+				expect(fecha.parse('10:20:30.12', 'HH:mm:ss.SS')).toEqual(new Date(2015, 0, 1, 10, 20, 30, 120));
+			});
+			it('milliseconds short', function() {
+				expect(fecha.parse('10:20:30.1', 'HH:mm:ss.S')).toEqual(new Date(2015, 0, 1, 10, 20, 30, 100));
 			});
 			it('timezone offset', function() {
 				expect(fecha.parse('09:20:31 GMT-0500 (EST)', 'HH:mm:ss ZZ')).toEqual(new Date(2015, 0, 1, 9, 20, 31));

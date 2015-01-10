@@ -12,12 +12,12 @@ npm install fecha --sav-dev
 #### Formatting
 ```
 // Custom formats
-fecha.format(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'); // 'Thursday December 20th, 2015'
-fecha.format(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A'); // '1998-06-03 3:23:10.350 PM'
+fecha.format(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'); // 'Friday November 20th, 2015'
+fecha.format(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A'); // '1998-06-03 03:23:10.350 PM'
 
 // Named masks
-fecha.format(new Date(2015, 10, 20), 'mediumDate'); // 'Dec 20, 2015'
-fecha.format(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '10:05'
+fecha.format(new Date(2015, 10, 20), 'mediumDate'); // 'Nov 20, 2015'
+fecha.format(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '05:30'
 ```
 
 #### Parsing
@@ -61,7 +61,7 @@ fecha.masks = {
 };
 
 // Create a new mask
-fecha.masks.myMask = 'HH:mm:ss YY/MM/DD'
+fecha.masks.myMask = 'HH:mm:ss YY/MM/DD';
 
 // Use it
 fecha.format(new Date(2014, 5, 6, 14, 10, 45), 'myMask'); // '14:10:45 14/06/06'

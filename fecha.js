@@ -40,10 +40,10 @@
 			YYYY: [fourDigits, function (d, v) {
 				d.year = v;
 			}],
-			S: [threeDigits, function (d, v) {
+			S: [/\d/, function (d, v) {
 				d.millisecond = v * 100;
 			}],
-			SS: [threeDigits, function (d, v) {
+			SS: [/\d{2}/, function (d, v) {
 				d.millisecond = v * 10;
 			}],
 			SSS: [threeDigits, function (d, v) {
@@ -58,7 +58,7 @@
 					d.isPm = true;
 				}
 			}],
-			o: [/[\+\-]?\d+/, function (d, v) {
+			ZZ: [/[\+\-]?\d+/, function (d, v) {
 				d.timeZoneOffset = v;
 			}]
 		};
