@@ -1,22 +1,18 @@
-(function(main) {
-    'use strict';
+(function (main) {
+	'use strict';
 
-    /**
-     * Parse or format dates
-     * @class fecha
-     */
-    var fecha = {},
-		token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g,
+	/**
+	 * Parse or format dates
+	 * @class fecha
+	 */
+	var fecha = {}, token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g,
 		dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
 		monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 		amPm = ['am', 'pm'],
-		twoDigits = /\d\d?/,
-		threeDigits = /\d{3}/,
-		fourDigits = /\d{4}/,
+		twoDigits = /\d\d?/, threeDigits = /\d{3}/, fourDigits = /\d{4}/,
 		word = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i,
-		noop = function() {},
-		dayNamesShort = [],
-		monthNamesShort = [],
+		noop = function () {},
+		dayNamesShort = [], monthNamesShort = [],
 		parseFlags = {
 			D: [twoDigits, function (d, v) {
 				d.day = v;
@@ -59,8 +55,7 @@
 				}
 			}],
 			ZZ: [/[\+\-]\d\d:?\d\d/, function (d, v) {
-				var parts = (v + '').match(/([\+\-]|\d\d)/gi),
-					minutes;
+				var parts = (v + '').match(/([\+\-]|\d\d)/gi), minutes;
 
 				if (parts) {
 					minutes = +(parts[1] * 60) + parseInt(parts[2], 10);
@@ -82,7 +77,7 @@
 	shorten(dayNames, dayNamesShort, 3);
 
 	function monthUpdate(arrName) {
-		return function(d, v) {
+		return function (d, v) {
 			var index = fecha.i18n[arrName].indexOf(v.charAt(0).toUpperCase() + v.substr(1).toLowerCase());
 			if (~index) {
 				d.month = index;
@@ -130,13 +125,13 @@
 		longTime: 'HH:mm:ss.SSS'
 	};
 
-    /***
-     * Format a date
-     * @method format
-     * @param {Date|string} dateObj
-     * @param {string} mask Format of the date, i.e. 'mm-dd-yy' or 'shortDate'
-     */
-    fecha.format = function(dateObj, mask) {
+	/***
+	 * Format a date
+	 * @method format
+	 * @param {Date|string} dateObj
+	 * @param {string} mask Format of the date, i.e. 'mm-dd-yy' or 'shortDate'
+	 */
+	fecha.format = function (dateObj, mask) {
 		// Passing date through Date applies Date.parse, if necessary
 		if (typeof dateObj === 'string') {
 			dateObj = fecha.parse(dateObj);
@@ -149,16 +144,7 @@
 
 		mask = fecha.masks[mask] || mask || fecha.masks['default'];
 
-		var D = dateObj.getDate(),
-			d = dateObj.getDay(),
-			M = dateObj.getMonth(),
-			y = dateObj.getFullYear(),
-			H = dateObj.getHours(),
-			m = dateObj.getMinutes(),
-			s = dateObj.getSeconds(),
-			S = dateObj.getMilliseconds(),
-			o = dateObj.getTimezoneOffset(),
-			flags = {
+		var D = dateObj.getDate(), d = dateObj.getDay(), M = dateObj.getMonth(), y = dateObj.getFullYear(), H = dateObj.getHours(), m = dateObj.getMinutes(), s = dateObj.getSeconds(), S = dateObj.getMilliseconds(), o = dateObj.getTimezoneOffset(), flags = {
 				D: D,
 				DD: pad(D),
 				Do: fecha.i18n.DoFn(D),
@@ -188,34 +174,33 @@
 				ZZ: (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4)
 			};
 
-		return mask.replace(token, function($0) {
+		return mask.replace(token, function ($0) {
 			return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
 		});
 	};
 
-    /**
-     * Parse a date string into an object, changes - into /
-     * @method parse
-     * @param {string} dateStr Date string
+	/**
+	 * Parse a date string into an object, changes - into /
+	 * @method parse
+	 * @param {string} dateStr Date string
 	 * @param {string} format Date parse format
-     * @returns {Date}
-     */
-    fecha.parse = function(dateStr, format) {
-        if (!format) {
+	 * @returns {Date}
+	 */
+	fecha.parse = function (dateStr, format) {
+		if (!format) {
 			return new Date(dateStr.replace(/\-/g, '/'));
 		} else {
 			format = fecha.masks[format] || format;
 
-			var isValid = true,
-				dateInfo = {};
-			format.replace(token, function($0) {
+			var isValid = true, dateInfo = {};
+			format.replace(token, function ($0) {
 				if (parseFlags[$0]) {
 					var info = parseFlags[$0];
 					var index = dateStr.search(info[0]);
 					if (!~index) {
 						isValid = false;
 					} else {
-						dateStr.replace(info[0], function(result) {
+						dateStr.replace(info[0], function (result) {
 							info[1](dateInfo, result);
 							dateStr = dateStr.substr(index + result.length);
 							return result;
@@ -231,22 +216,21 @@
 			return false;
 		}
 
-		var today = new Date(),
-			date;
+		var today = new Date(), date;
 		if (dateInfo.isPm && dateInfo.hour) {
 			dateInfo.hour = +dateInfo.hour + 12
 		}
 
 		if (dateInfo.timezoneOffset) {
 			dateInfo.minute = +(dateInfo.minute || 0) - +dateInfo.timezoneOffset;
-			date = new Date(Date.UTC(dateInfo.year || today.getFullYear(), dateInfo.month || 0, dateInfo.day || 1, dateInfo.hour || 0,
-				dateInfo.minute || 0, dateInfo.second || 0, dateInfo.millisecond || 0));
+			date = new Date(Date.UTC(dateInfo.year || today.getFullYear(), dateInfo.month || 0, dateInfo.day || 1,
+				dateInfo.hour || 0, dateInfo.minute || 0, dateInfo.second || 0, dateInfo.millisecond || 0));
 		} else {
-			date = new Date(dateInfo.year || today.getFullYear(), dateInfo.month || 0, dateInfo.day || 1, dateInfo.hour || 0,
-				dateInfo.minute || 0, dateInfo.second || 0, dateInfo.millisecond || 0);
+			date = new Date(dateInfo.year || today.getFullYear(), dateInfo.month || 0, dateInfo.day || 1,
+				dateInfo.hour || 0, dateInfo.minute || 0, dateInfo.second || 0, dateInfo.millisecond || 0);
 		}
 		return date;
-    };
+	};
 
 	if (typeof module !== 'undefined' && module.exports) {
 		module.exports = fecha;
