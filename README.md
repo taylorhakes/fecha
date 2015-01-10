@@ -136,11 +136,6 @@ fecha.format(new Date(2014, 5, 6, 14, 10, 45), 'myMask'); // '14:10:45 14/06/06'
       <td>1970 1971 ... 2029 2030</td>
     </tr>
     <tr>
-      <td><b>Week Year</b></td>
-      <td>gg</td>
-      <td>70 71 ... 29 30</td>
-    </tr>
-    <tr>
       <td><b>AM/PM</b></td>
       <td>A</td>
       <td>AM PM</td>
