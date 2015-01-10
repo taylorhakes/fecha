@@ -1,0 +1,33 @@
+{
+  "name": "fecha",
+  "version": "0.1.0",
+  "description": "Date formatting and parsing",
+  "main": "date.js",
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://taylorhakes@github.com/taylorhakes/fecha.git"
+  },
+  "keywords": [
+    "date",
+    "parse",
+    "moment",
+    "format",
+    "formatting"
+  ],
+  "author": "Taylor Hakes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taylorhakes/fecha/issues"
+  },
+  "homepage": "https://github.com/taylorhakes/fecha",
+  "devDependencies": {
+    "karma": "^0.12.31",
+    "jasmine-core": "^2.1.3",
+    "karma-jasmine": "^0.3.4",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-coverage": "^0.2.7"
+  }
+}
