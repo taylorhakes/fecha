@@ -4,7 +4,7 @@
   "description": "Date formatting and parsing",
   "main": "date.js",
   "scripts": {
-    "test": "karma start"
+    "test": "node_modules/karma/bin/karma start"
   },
   "repository": {
     "type": "git",
