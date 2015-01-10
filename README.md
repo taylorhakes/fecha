@@ -4,7 +4,7 @@ Lightweight date formatting and parsing (~1KB). Meant to replace parsing and for
 
 ### NPM
 ```
-npm install fecha --sav-dev
+npm install fecha --save-dev
 ```
 
 ## Use it
