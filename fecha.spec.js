@@ -65,7 +65,7 @@
 				expect(fecha.parse('10:20:30.1', 'HH:mm:ss.S')).toEqual(new Date(2015, 0, 1, 10, 20, 30, 100));
 			});
 			it('timezone offset', function() {
-				expect(fecha.parse('09:20:31 GMT-0500 (EST)', 'HH:mm:ss ZZ')).toEqual(new Date(2015, 0, 1, 9, 20, 31));
+				expect(fecha.parse('09:20:31 GMT-0500 (EST)', 'HH:mm:ss ZZ')).toEqual(new Date(Date.UTC(2015, 0, 1, 14, 20, 31)));
 			});
         });
         describe('format', function() {
