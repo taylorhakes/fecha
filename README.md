@@ -1,5 +1,4 @@
 # fecha
-====
 
 Lightweight date formatting and parsing (~1KB). Meant to replace parsing and formatting functionality of moment.js.
 
