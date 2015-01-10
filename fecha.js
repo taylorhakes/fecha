@@ -58,8 +58,15 @@
 					d.isPm = true;
 				}
 			}],
-			ZZ: [/[\+\-]?\d+/, function (d, v) {
-				d.timeZoneOffset = v;
+			ZZ: [/[\+\-]\d\d:?\d\d/, function (d, v) {
+				var parts = (v + '').match(/([\+\-]|\d\d)/gi),
+					minutes;
+
+				if (parts) {
+					minutes = +(parts[1] * 60) + parseInt(parts[2], 10);
+					d.timezoneOffset = parts[0] === '+' ? minutes : -minutes;
+				}
+
 			}]
 		};
 	parseFlags.dd = parseFlags.d;
@@ -230,8 +237,8 @@
 			dateInfo.hour = +dateInfo.hour + 12
 		}
 
-		if (dateInfo.timeZoneOffset && dateInfo.hour) {
-			dateInfo.hour = +dateInfo.hour - +dateInfo.timeZoneOffset.replace(/0/g, '');
+		if (dateInfo.timezoneOffset) {
+			dateInfo.minute = +(dateInfo.minute || 0) - +dateInfo.timezoneOffset;
 			date = new Date(Date.UTC(dateInfo.year || today.getFullYear(), dateInfo.month || 0, dateInfo.day || 1, dateInfo.hour || 0,
 				dateInfo.minute || 0, dateInfo.second || 0, dateInfo.millisecond || 0));
 		} else {
