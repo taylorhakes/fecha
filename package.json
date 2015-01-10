@@ -1,8 +1,8 @@
 {
   "name": "fecha",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Date formatting and parsing",
-  "main": "date.js",
+  "main": "fecha.js",
   "scripts": {
     "test": "node_modules/karma/bin/karma start"
   },
@@ -15,6 +15,7 @@
     "parse",
     "moment",
     "format",
+    "fecha",
     "formatting"
   ],
   "author": "Taylor Hakes",
