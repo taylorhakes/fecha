@@ -70,6 +70,15 @@
 				expect(fecha.parse('09:20:31 GMT-0500 (EST)', 'HH:mm:ss ZZ')).toEqual(new Date(Date.UTC(2015, 0, 1, 14,
 					20, 31)));
 			});
+			it('invalid date', function () {
+				expect(fecha.parse('hello', 'HH:mm:ss ZZ')).toEqual(false);
+			});
+			it('invalid date no format', function () {
+				expect(fecha.parse('hello')).toEqual(false);
+			});
+			it('no format specified', function () {
+				expect(fecha.parse('2014-11-05')).toEqual(new Date(2014, 10, 5));
+			});
 		});
 		describe('format', function () {
 			// Day of the month

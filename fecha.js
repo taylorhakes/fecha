@@ -185,19 +185,28 @@
 	 * @method parse
 	 * @param {string} dateStr Date string
 	 * @param {string} format Date parse format
-	 * @returns {Date}
+	 * @returns {Date|boolean}
 	 */
 	fecha.parse = function (dateStr, format) {
+		var time, isValid, dateInfo, today, date, info, index;
+
 		if (!format) {
-			return new Date(dateStr.replace(/\-/g, '/'));
+			time = Date.parse(dateStr.replace(/\-/g, '/'));
+			if (!isNaN(time)) {
+				return new Date(time);
+			} else {
+				return false;
+			}
+
 		} else {
 			format = fecha.masks[format] || format;
 
-			var isValid = true, dateInfo = {};
+			isValid = true;
+			dateInfo = {};
 			format.replace(token, function ($0) {
 				if (parseFlags[$0]) {
-					var info = parseFlags[$0];
-					var index = dateStr.search(info[0]);
+					info = parseFlags[$0];
+					index = dateStr.search(info[0]);
 					if (!~index) {
 						isValid = false;
 					} else {
@@ -217,7 +226,7 @@
 			return false;
 		}
 
-		var today = new Date(), date;
+		today = new Date();
 		if (dateInfo.isPm && dateInfo.hour) {
 			dateInfo.hour = +dateInfo.hour + 12
 		}
