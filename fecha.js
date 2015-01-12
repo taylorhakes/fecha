@@ -145,7 +145,16 @@
 
 		mask = fecha.masks[mask] || mask || fecha.masks['default'];
 
-		var D = dateObj.getDate(), d = dateObj.getDay(), M = dateObj.getMonth(), y = dateObj.getFullYear(), H = dateObj.getHours(), m = dateObj.getMinutes(), s = dateObj.getSeconds(), S = dateObj.getMilliseconds(), o = dateObj.getTimezoneOffset(), flags = {
+		var D = dateObj.getDate(),
+			d = dateObj.getDay(),
+			M = dateObj.getMonth(),
+			y = dateObj.getFullYear(),
+			H = dateObj.getHours(),
+			m = dateObj.getMinutes(),
+			s = dateObj.getSeconds(),
+			S = dateObj.getMilliseconds(),
+			o = dateObj.getTimezoneOffset(),
+			flags = {
 				D: D,
 				DD: pad(D),
 				Do: fecha.i18n.DoFn(D),
