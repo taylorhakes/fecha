@@ -4,8 +4,44 @@ Lightweight date formatting and parsing (~1KB). Meant to replace parsing and for
 
 ### NPM
 ```
-npm install fecha --save-dev
+npm install fecha --save
 ```
+
+### Fecha vs Moment
+<table class="table table-striped table-bordered">
+  <tbody>
+    <tr>
+      <th></th>
+      <th>Fecha</th>
+      <th>Moment</th>
+    </tr>
+    <tr>
+      <td><b>Size (Min. and Gzipped)</b></td>
+      <td>13.1KBs</td>
+      <td>2.1KBs</td>
+    </tr>
+    <tr>
+      <td><b>Date Parsing</b></td>
+      <td>&#x2713;</td>
+      <td>&#x2713;</td>
+    </tr>
+    <tr>
+      <td><b>Date Formatting</b></td>
+      <td>&#x2713;</td>
+      <td>&#x2713;</td>
+    </tr>
+    <tr>
+      <td><b>Date Manipulation</b></td>
+      <td>Native Only</td>
+      <td>&#x2713;</td>
+    </tr>
+    <tr>
+      <td><b>I18n Support</b></td>
+      <td>&#x2713;</td>
+      <td>&#x2713;</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Use it
 
