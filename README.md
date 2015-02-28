@@ -17,8 +17,8 @@ npm install fecha --save
     </tr>
     <tr>
       <td><b>Size (Min. and Gzipped)</b></td>
-      <td>13.1KBs</td>
       <td>2.1KBs</td>
+      <td>13.1KBs</td>
     </tr>
     <tr>
       <td><b>Date Parsing</b></td>
