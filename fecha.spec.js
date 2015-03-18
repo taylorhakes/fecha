@@ -79,6 +79,9 @@
 			it('no format specified', function () {
 				expect(fecha.parse('2014-11-05')).toEqual(new Date(2014, 10, 5));
 			});
+			it('another no format', function() {
+				expect(fecha.parse('2015-02-29')).toEqual(new Date(2015, 1, 29));
+			});
 		});
 		describe('format', function () {
 			// Day of the month

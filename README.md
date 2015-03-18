@@ -54,6 +54,7 @@ fecha.format(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A')
 // Named masks
 fecha.format(new Date(2015, 10, 20), 'mediumDate'); // 'Nov 20, 2015'
 fecha.format(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '05:30'
+
 ```
 
 #### Parsing
@@ -65,6 +66,9 @@ fecha.parse('10-12-10 14:11:12', 'YY-MM-DD HH:mm:ss'); // new Date(2010, 11, 10,
 // Named masks
 fecha.parse('5/3/98', 'shortDate'); // new Date(1998, 4, 3)
 fecha.parse('November 4, 2005', 'longDate'); // new Date(2005, 10, 4)
+
+// DEPRECATED: Without Format (Can be unintuitive. Will be removed in future version. Not recommended)
+fecha.parse('10/03/2015'); // new Date(2015, 10, 3)
 ```
 
 #### i18n Support
