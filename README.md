@@ -68,7 +68,7 @@ fecha.parse('5/3/98', 'shortDate'); // new Date(1998, 4, 3)
 fecha.parse('November 4, 2005', 'longDate'); // new Date(2005, 10, 4)
 
 // DEPRECATED: Without Format (Can be unintuitive. Will be removed in future version. Not recommended)
-fecha.parse('10/03/2015'); // new Date(2015, 10, 3)
+fecha.parse('10/03/2015'); // new Date(2015, 9, 3)
 ```
 
 #### i18n Support
