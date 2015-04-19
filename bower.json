@@ -1,34 +1,34 @@
 {
-  name: 'fecha',
-  main: 'fecha.js',
-  version: '0.2.1',
-  homepage: 'https://github.com/taylorhakes/fecha',
-  authors: [
-    'Taylor Hakes'
+  "name": "fecha",
+  "main": "fecha.js",
+  "version": "0.2.1",
+  "homepage": "https://github.com/taylorhakes/fecha",
+  "authors": [
+    "Taylor Hakes"
   ],
-  description: 'Date formatting and parsing',
-  moduleType: [
-    'amd',
-    'globals',
-    'node'
+  "description": "Date formatting and parsing",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
   ],
-  keywords: [
-    'date',
-    'parse',
-    'moment',
-    'format',
-    'fecha',
-    'formatting'
+  "keywords": [
+    "date",
+    "parse",
+    "moment",
+    "format",
+    "fecha",
+    "formatting"
   ],
-  license: 'MIT',
-  ignore: [
-    '**/.*',
-    'node_modules',
-    'bower_components',
-    'test',
-    'tests'
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
   ],
-  devDependencies: {
+  "devDependencies": {
     "karma": "^0.12.31",
     "jasmine-core": "^2.1.3",
     "karma-jasmine": "^0.3.4",
