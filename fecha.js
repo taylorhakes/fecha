@@ -199,6 +199,10 @@
 	fecha.parse = function (dateStr, format) {
 		var time, isValid, dateInfo, today, date, info, index;
 
+		if (!dateStr) {
+			return false;
+		}
+
 		if (!format) {
 			time = Date.parse(dateStr.replace(/\-/g, '/'));
 			if (!isNaN(time)) {
