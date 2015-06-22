@@ -76,6 +76,9 @@
 			it('invalid date no format', function () {
 				expect(fecha.parse('hello')).toEqual(false);
 			});
+			it('no date', function () {
+				expect(fecha.parse()).toEqual(false);
+			});
 			it('no format specified', function () {
 				expect(fecha.parse('2014-11-05')).toEqual(new Date(2014, 10, 5));
 			});
