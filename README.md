@@ -32,7 +32,7 @@ npm install fecha --save
     </tr>
     <tr>
       <td><b>Date Manipulation</b></td>
-      <td>Native Only</td>
+      <td></td>
       <td>&#x2713;</td>
     </tr>
     <tr>
