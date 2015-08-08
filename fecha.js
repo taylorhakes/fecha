@@ -253,7 +253,7 @@
 
 	if (typeof module !== 'undefined' && module.exports) {
 		module.exports = fecha;
-	} else if (typeof require !== 'undefined' && require.amd) {
+	} else if (typeof define === 'function' && define.amd) {
 		define(function () {
 			return fecha;
 		});
