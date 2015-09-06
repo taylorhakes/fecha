@@ -74,13 +74,14 @@
 				expect(fecha.parse('hello', 'HH:mm:ss ZZ')).toEqual(false);
 			});
 			it('invalid date no format', function () {
-				expect(fecha.parse('hello')).toEqual(false);
+				expect(function() {
+					fecha.parse('hello')
+				}).toThrow();
 			});
 			it('no format specified', function () {
-				expect(fecha.parse('2014-11-05')).toEqual(new Date(2014, 10, 5));
-			});
-			it('another no format', function() {
-				expect(fecha.parse('2015-02-29')).toEqual(new Date(2015, 1, 29));
+				expect(function() {
+					fecha.parse('2014-11-05', false)
+				}).toThrow();
 			});
 		});
 		describe('format', function () {
@@ -162,10 +163,13 @@
 				}).toThrow();
 			});
 			it('Valid parse', function () {
-				expect(fecha.format('2011-10-01', 'MM-DD-YYYY')).toBe('10-01-2011');
+
+				expect(function() {
+					fecha.format('2011-10-01', 'MM-DD-YYYY')
+				}).toThrow();
 			});
 			it('Current Date', function () {
-				expect(fecha.format(null, 'YYYY')).toBe('' + (new Date()).getFullYear());
+				expect(fecha.format(new Date(), 'YYYY')).toBe('' + (new Date()).getFullYear());
 			});
 			it('Mask', function () {
 				expect(fecha.format(new Date(1999, 0, 2), 'mediumDate')).toBe('Jan 2, 1999');

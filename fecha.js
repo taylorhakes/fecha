@@ -129,18 +129,16 @@
 	/***
 	 * Format a date
 	 * @method format
-	 * @param {Date|string} dateObj
+	 * @param {Date|number} dateObj
 	 * @param {string} mask Format of the date, i.e. 'mm-dd-yy' or 'shortDate'
 	 */
 	fecha.format = function (dateObj, mask) {
-		// Passing date through Date applies Date.parse, if necessary
-		if (typeof dateObj === 'string') {
-			dateObj = fecha.parse(dateObj);
-		} else if (!dateObj) {
-			dateObj = new Date();
+		if (typeof dateObj === 'number') {
+			dateObj = new Date(dateObj);
 		}
-		if (isNaN(dateObj)) {
-			throw new SyntaxError('invalid date');
+
+		if (!dateObj || typeof dateObj !== 'object' && typeof dateObj.getDate  !== 'function') {
+			throw new Error('Invalid Date in fecha.format');
 		}
 
 		mask = fecha.masks[mask] || mask || fecha.masks['default'];
@@ -197,39 +195,33 @@
 	 * @returns {Date|boolean}
 	 */
 	fecha.parse = function (dateStr, format) {
-		var time, isValid, dateInfo, today, date, info, index;
+		var isValid, dateInfo, today, date, info, index;
 
-		if (!format) {
-			time = Date.parse(dateStr.replace(/\-/g, '/'));
-			if (!isNaN(time)) {
-				return new Date(time);
-			} else {
-				return false;
+		if (typeof format !== 'string') {
+			throw new Error('Invalid format in fecha.parse');
+		}
+
+		format = fecha.masks[format] || format;
+
+		isValid = true;
+		dateInfo = {};
+		format.replace(token, function ($0) {
+			if (parseFlags[$0]) {
+				info = parseFlags[$0];
+				index = dateStr.search(info[0]);
+				if (!~index) {
+					isValid = false;
+				} else {
+					dateStr.replace(info[0], function (result) {
+						info[1](dateInfo, result);
+						dateStr = dateStr.substr(index + result.length);
+						return result;
+					});
+				}
 			}
 
-		} else {
-			format = fecha.masks[format] || format;
-
-			isValid = true;
-			dateInfo = {};
-			format.replace(token, function ($0) {
-				if (parseFlags[$0]) {
-					info = parseFlags[$0];
-					index = dateStr.search(info[0]);
-					if (!~index) {
-						isValid = false;
-					} else {
-						dateStr.replace(info[0], function (result) {
-							info[1](dateInfo, result);
-							dateStr = dateStr.substr(index + result.length);
-							return result;
-						});
-					}
-				}
-
-				return parseFlags[$0] ? '' : $0.slice(1, $0.length - 1);
-			});
-		}
+			return parseFlags[$0] ? '' : $0.slice(1, $0.length - 1);
+		});
 
 		if (!isValid) {
 			return false;
