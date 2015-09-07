@@ -46,7 +46,13 @@ npm install fecha --save
 ## Use it
 
 #### Formatting
+`fecha.format` accepts a Date object (or timestamp) and a string format and returns a formatted string. See below for
+available format tokens.
+
+Note: `fecha.format` will throw an error when passed invalid parameters
 ```
+fecha.format(<Date Object>, <String Format>);
+
 // Custom formats
 fecha.format(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'); // 'Friday November 20th, 2015'
 fecha.format(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A'); // '1998-06-03 03:23:10.350 PM'
@@ -58,6 +64,9 @@ fecha.format(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '05:30'
 ```
 
 #### Parsing
+`fecha.parse` accepts a Date string and a string format and returns a Date object. See below for available format tokens.
+
+Note: `fecha.parse` will throw an error when passed invalid parameters
 ```
 // Custom formats
 fecha.parse('February 3rd, 2014', 'MMMM Do, YYYY'); // new Date(2014, 1, 3)
@@ -66,9 +75,6 @@ fecha.parse('10-12-10 14:11:12', 'YY-MM-DD HH:mm:ss'); // new Date(2010, 11, 10,
 // Named masks
 fecha.parse('5/3/98', 'shortDate'); // new Date(1998, 4, 3)
 fecha.parse('November 4, 2005', 'longDate'); // new Date(2005, 10, 4)
-
-// DEPRECATED: Without Format (Can be unintuitive. Will be removed in future version. Not recommended)
-fecha.parse('10/03/2015'); // new Date(2015, 9, 3)
 ```
 
 #### i18n Support
