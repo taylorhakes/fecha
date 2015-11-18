@@ -70,6 +70,10 @@
 				expect(fecha.parse('09:20:31 GMT-0500 (EST)', 'HH:mm:ss ZZ')).toEqual(new Date(Date.UTC(2015, 0, 1, 14,
 					20, 31)));
 			});
+			it('UTC timezone offset', function () {
+				expect(fecha.parse('09:20:31 GMT-0000 (UTC)', 'HH:mm:ss ZZ')).toEqual(new Date(Date.UTC(2015, 0, 1, 9,
+					20, 31)));
+			});
 			it('invalid date', function () {
 				expect(fecha.parse('hello', 'HH:mm:ss ZZ')).toEqual(false);
 			});
