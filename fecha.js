@@ -51,7 +51,10 @@
 			MMM: [word, monthUpdate('monthNamesShort')],
 			MMMM: [word, monthUpdate('monthNames')],
 			a: [word, function (d, v) {
-				if (amPm.indexOf(v.toLowerCase())) {
+				var val = v.toLowerCase();
+				if (val === amPm[0]) {
+					d.isPm = false;
+				} else if (val === amPm[1]) {
 					d.isPm = true;
 				}
 			}],
@@ -228,8 +231,10 @@
 		}
 
 		today = new Date();
-		if (dateInfo.isPm && dateInfo.hour) {
-			dateInfo.hour = +dateInfo.hour + 12
+		if (dateInfo.isPm === true && dateInfo.hour != null && +dateInfo.hour !== 12) {
+			dateInfo.hour = +dateInfo.hour + 12;
+		} else if (dateInfo.isPm === false && +dateInfo.hour === 12) {
+			dateInfo.hour = 0;
 		}
 
 		if (dateInfo.timezoneOffset != null) {

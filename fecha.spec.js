@@ -39,14 +39,23 @@
 			it('day name', function () {
 				expect(fecha.parse('Wednesday Feb 03, 2100', 'dddd MMM DD, YYYY')).toEqual(new Date(2100, 1, 3));
 			});
-			it('ampm', function () {
+			it('ampm 10PM', function () {
 				expect(fecha.parse('2015-11-07 10PM', 'YYYY-MM-DD hhA')).toEqual(new Date(2015, 10, 7, 22));
 			});
-			it('ampm am', function () {
-				expect(fecha.parse('2000-01-01 12AM', 'YYYY-MM-DD hhA')).toEqual(new Date(2000, 0, 1, 12));
+			it('ampm 9AM', function () {
+				expect(fecha.parse('2015-11-07 9AM', 'YYYY-MM-DD hhA')).toEqual(new Date(2015, 10, 7, 9));
+			});
+			it('ampm 12am', function () {
+				expect(fecha.parse('2000-01-01 12AM', 'YYYY-MM-DD hhA')).toEqual(new Date(2000, 0, 1, 0));
+			});
+			it('ampm 3am', function () {
+				expect(fecha.parse('2000-01-01 3AM', 'YYYY-MM-DD hhA')).toEqual(new Date(2000, 0, 1, 3));
 			});
 			it('ampm am lowercase', function () {
 				expect(fecha.parse('2000-01-01 11am', 'YYYY-MM-DD hha')).toEqual(new Date(2000, 0, 1, 11));
+			});
+			it('noon pm lowercase', function () {
+				expect(fecha.parse('2000-01-01 12pm', 'YYYY-MM-DD hha')).toEqual(new Date(2000, 0, 1, 12));
 			});
 			it('24 hour time long', function () {
 				expect(fecha.parse('2000-01-01 20', 'YYYY-MM-DD HH')).toEqual(new Date(2000, 0, 1, 20));
