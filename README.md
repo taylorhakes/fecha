@@ -50,7 +50,7 @@ npm install fecha --save
 available format tokens.
 
 Note: `fecha.format` will throw an error when passed invalid parameters
-```
+```js
 fecha.format(<Date Object>, <String Format>);
 
 // Custom formats
@@ -67,7 +67,7 @@ fecha.format(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '05:30'
 `fecha.parse` accepts a Date string and a string format and returns a Date object. See below for available format tokens.
 
 Note: `fecha.parse` will throw an error when passed invalid parameters
-```
+```js
 // Custom formats
 fecha.parse('February 3rd, 2014', 'MMMM Do, YYYY'); // new Date(2014, 1, 3)
 fecha.parse('10-12-10 14:11:12', 'YY-MM-DD HH:mm:ss'); // new Date(2010, 11, 10, 14, 11, 12)
@@ -78,7 +78,7 @@ fecha.parse('November 4, 2005', 'longDate'); // new Date(2005, 10, 4)
 ```
 
 #### i18n Support
-```
+```js
 // Override fecha.i18n to support any language
 fecha.i18n = {
 	dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'],
@@ -94,7 +94,7 @@ fecha.i18n = {
 ```
 
 #### Custom Named Masks
-```
+```js
 fecha.masks = {
 	'default': 'ddd MMM DD YYYY HH:mm:ss',
 	shortDate: 'M/D/YY',
