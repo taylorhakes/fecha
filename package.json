@@ -1,6 +1,6 @@
 {
   "name": "fecha",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Date formatting and parsing",
   "main": "fecha.js",
   "scripts": {
