@@ -96,6 +96,13 @@
           fecha.parse('2014-11-05', false)
         }).toThrow();
       });
+      it('long input false', function () {
+        var input = '';
+        for (var i = 0; i < 1002; i++) {
+          input += '1';
+        }
+        expect(fecha.parse(input, 'HH')).toBe(false);
+      });
     });
     describe('format', function () {
       // Day of the month
