@@ -1,10 +1,10 @@
 {
   "name": "fecha",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Date formatting and parsing",
   "main": "fecha.js",
   "scripts": {
-    "test": "node_modules/karma/bin/karma start"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -25,13 +25,9 @@
   },
   "homepage": "https://github.com/taylorhakes/fecha",
   "devDependencies": {
-    "karma": "^0.12.31",
-    "jasmine-core": "^2.1.3",
-    "karma-jasmine": "^0.3.4",
-    "karma-phantomjs-launcher": "^0.1.4",
-    "karma-coverage": "^0.2.7",
     "gulp": "^3.8.10",
+    "gulp-rename": "^1.2.0",
     "gulp-uglify": "^1.0.2",
-    "gulp-rename": "^1.2.0"
+    "painless": "^0.2.2"
   }
 }
