@@ -1,6 +1,6 @@
 var painless = require('painless');
 var fecha = require('./fecha');
-var test = painless.test;
+var test = painless.createGroup();
 var assert = painless.assert;
 var today = new Date();
 var year = today.getFullYear();
