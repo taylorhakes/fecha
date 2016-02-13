@@ -142,7 +142,7 @@
       dateObj = new Date(dateObj);
     }
 
-    if (!dateObj || typeof dateObj !== 'object' && typeof dateObj.getDate !== 'function') {
+    if (Object.prototype.toString.call(dateObj) !== '[object Date]' || isNaN(dateObj.getTime())) {
       throw new Error('Invalid Date in fecha.format');
     }
 
@@ -256,6 +256,7 @@
     return date;
   };
 
+  /* istanbul ignore next */
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = fecha;
   } else if (typeof define === 'function' && define.amd) {

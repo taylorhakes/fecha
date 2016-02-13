@@ -40,6 +40,7 @@ testParse('milliseconds medium', '10:20:30.12', 'HH:mm:ss.SS', new Date(year, 0,
 testParse('milliseconds short', '10:20:30.1', 'HH:mm:ss.S', new Date(year, 0, 1, 10, 20, 30, 100));
 testParse('timezone offset', '09:20:31 GMT-0500 (EST)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 14, 20, 31)));
 testParse('UTC timezone offset', '09:20:31 GMT-0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9,20, 31)));
+testParse('UTC timezone offset without GMT', '09:20:31 -0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9,20, 31)));
 testParse('invalid date', 'hello', 'HH:mm:ss ZZ', false);
 test('invalid date no format', function () {
   assert.throws(function () {
@@ -132,10 +133,16 @@ testFormat('YYYY/MM/DD HH:mm:ss', new Date(2031, 10, 29, 2, 1, 9, 5), 'YYYY/MM/D
 testFormat('D-M-YYYY', new Date(2043, 8, 18, 2, 1, 9, 5), 'D-M-YYYY', '18-9-2043');
 testFormat('current date', new Date(), 'YYYY', '' + (new Date()).getFullYear());
 testFormat('mask', new Date(1999, 0, 2), 'mediumDate', 'Jan 2, 1999');
+testFormat('number date', 1325376000000, 'YYY-MM-DD HH:mm:ss', fecha.format(new Date(Date.UTC(2012,0,1)), 'YYY-MM-DD HH:mm:ss'));
 
 test('Invalid date', function () {
   assert.throws(function () {
     fecha.format('hello', 'YYYY');
+  });
+});
+test('Invalid date number', function () {
+  assert.throws(function () {
+    fecha.format(89237983724982374, 'YYYY');
   });
 });
 test('string date', function () {
