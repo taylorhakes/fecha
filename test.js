@@ -39,9 +39,29 @@ testParse('milliseconds time', '10:20:30.123', 'HH:mm:ss.SSS', new Date(year, 0,
 testParse('milliseconds medium', '10:20:30.12', 'HH:mm:ss.SS', new Date(year, 0, 1, 10, 20, 30, 120));
 testParse('milliseconds short', '10:20:30.1', 'HH:mm:ss.S', new Date(year, 0, 1, 10, 20, 30, 100));
 testParse('timezone offset', '09:20:31 GMT-0500 (EST)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 14, 20, 31)));
-testParse('UTC timezone offset', '09:20:31 GMT-0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9,20, 31)));
-testParse('UTC timezone offset without GMT', '09:20:31 -0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9,20, 31)));
+testParse('UTC timezone offset', '09:20:31 GMT-0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9, 20, 31)));
+testParse('UTC timezone offset without GMT', '09:20:31 -0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9, 20, 31)));
 testParse('invalid date', 'hello', 'HH:mm:ss ZZ', false);
+test('i18n month short parse', function() {
+  assert.equal(+fecha.parse('def 3rd, 2021', 'MMM Do, YYYY', {
+    monthNamesShort: ['Adk', 'Def', 'Sdfs', 'Sdf', 'Sdh', 'Tre', 'Iis', 'Swd', 'Ews', 'Sdf', 'Qaas', 'Ier']
+  }), +new Date(2021, 1, 3));
+});
+test('i18n month long parse', function() {
+  assert.equal(+fecha.parse('defg 3rd, 2021', 'MMMM Do, YYYY', {
+    monthNames: ['Adk', 'Defg', 'Sdfs', 'Sdf', 'Sdh', 'Tre', 'Iis', 'Swd', 'Ews', 'Sdf', 'Qaas', 'Ier']
+  }), +new Date(2021, 1, 3));
+});
+test('i18n pm parse', function() {
+  assert.equal(+fecha.parse('2018-05-02 10GD', 'YYYY-MM-DD HHA', {
+    amPm: ['sd', 'gd']
+  }), +new Date(2018,4,2,22));
+});
+test('i18n am parse', function() {
+  assert.equal(+fecha.parse('2018-05-02 10SD', 'YYYY-MM-DD HHA', {
+    amPm: ['sd', 'gd']
+  }), +new Date(2018,4,2,10));
+});
 test('invalid date no format', function () {
   assert.throws(function () {
     fecha.parse('hello');
@@ -134,7 +154,12 @@ testFormat('D-M-YYYY', new Date(2043, 8, 18, 2, 1, 9, 5), 'D-M-YYYY', '18-9-2043
 testFormat('current date', new Date(), 'YYYY', '' + (new Date()).getFullYear());
 testFormat('mask', new Date(1999, 0, 2), 'mediumDate', 'Jan 2, 1999');
 testFormat('number date', 1325376000000, 'YYY-MM-DD HH:mm:ss', fecha.format(new Date(Date.UTC(2012,0,1)), 'YYY-MM-DD HH:mm:ss'));
-
+test('i18n am format', function() {
+  assert.equal(fecha.format(new Date(2018,4,2,10), 'YYYY-MM-DD HHA', {
+    amPm: ['sd', 'gd'],
+    DoFn: function() {}
+  }), '2018-05-02 10SD');
+});
 test('Invalid date', function () {
   assert.throws(function () {
     fecha.format('hello', 'YYYY');
