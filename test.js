@@ -104,7 +104,11 @@ testFormat('Year long', new Date(2001, 2, 5), 'YYYY', '2001');
 testFormat('Hour 12 hour short', new Date(2001, 2, 5, 6), 'h', '6');
 testFormat('Hour 12 hour padded', new Date(2001, 2, 5, 6), 'hh', '06');
 testFormat('Hour 12 hour short 2', new Date(2001, 2, 5, 14), 'h', '2');
+testFormat('Hour 12 hour short noon', new Date(2001, 2, 5, 12), 'h', '12');
+testFormat('Hour 12 hour short midnight', new Date(2001, 2, 5, 0), 'h', '12');
 testFormat('Hour 12 hour padded 2', new Date(2001, 2, 5, 14), 'hh', '02');
+testFormat('Hour 12 hour padded noon', new Date(2001, 2, 5, 12), 'hh', '12');
+testFormat('Hour 12 hour padded midnight', new Date(2001, 2, 5, 0), 'hh', '12');
 testFormat('Hour 24 hour short', new Date(2001, 2, 5, 13), 'H', '13');
 testFormat('Hour 24 hour padded', new Date(2001, 2, 5, 13), 'HH', '13');
 testFormat('Hour 24 hour short', new Date(2001, 2, 5, 3), 'H', '3');
@@ -132,7 +136,8 @@ testFormat('ampm AM', new Date(2001, 2, 5, 3, 7, 2, 5), 'A', 'AM');
 testFormat('ampm PM', new Date(2001, 2, 5, 16, 7, 2, 5), 'A', 'PM');
 
 // th, st, nd, rd
-testFormat('th', new Date(2001, 2, 11), 'Do', '11th');
+testFormat('th 11', new Date(2001, 2, 11), 'Do', '11th');
+testFormat('th 6', new Date(2001, 2, 6), 'Do', '6th');
 testFormat('st', new Date(2001, 2, 21), 'Do', '21st');
 testFormat('nd', new Date(2001, 2, 2), 'Do', '2nd');
 testFormat('rd', new Date(2001, 2, 23), 'Do', '23rd');
@@ -160,6 +165,10 @@ test('i18n am format', function() {
     DoFn: function() {}
   }), '2018-05-02 10SD');
 });
+test('no format', function() {
+  assert.equal(fecha.format(new Date(2017,4,2,10)), 'Tue May 02 2017 10:00:00');
+});
+
 test('Invalid date', function () {
   assert.throws(function () {
     fecha.format('hello', 'YYYY');

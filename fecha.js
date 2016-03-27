@@ -55,6 +55,91 @@
     }
   };
 
+  var formatFlags = {
+    D: function(dateObj) {
+      return dateObj.getDate();
+    },
+    DD: function(dateObj) {
+      return pad(dateObj.getDate());
+    },
+    Do: function(dateObj, i18n) {
+      return i18n.DoFn(dateObj.getDate());
+    },
+    d: function(dateObj) {
+      return dateObj.getDay();
+    },
+    dd: function(dateObj) {
+      return pad(dateObj.getDay());
+    },
+    ddd: function(dateObj, i18n) {
+      return i18n.dayNamesShort[dateObj.getDay()];
+    },
+    dddd: function(dateObj, i18n) {
+      return i18n.dayNames[dateObj.getDay()];
+    },
+    M: function(dateObj) {
+      return dateObj.getMonth() + 1;
+    },
+    MM: function(dateObj) {
+      return pad(dateObj.getMonth() + 1);
+    },
+    MMM: function(dateObj, i18n) {
+      return i18n.monthNamesShort[dateObj.getMonth()];
+    },
+    MMMM: function(dateObj, i18n) {
+      return i18n.monthNames[dateObj.getMonth()];
+    },
+    YY: function(dateObj) {
+      return String(dateObj.getFullYear()).substr(2);
+    },
+    YYYY: function(dateObj) {
+      return dateObj.getFullYear();
+    },
+    h: function(dateObj) {
+      return dateObj.getHours() % 12 || 12;
+    },
+    hh: function(dateObj) {
+      return pad(dateObj.getHours() % 12 || 12);
+    },
+    H: function(dateObj) {
+      return dateObj.getHours();
+    },
+    HH: function(dateObj) {
+      return pad(dateObj.getHours());
+    },
+    m: function(dateObj) {
+      return dateObj.getMinutes();
+    },
+    mm: function(dateObj) {
+      return pad(dateObj.getMinutes());
+    },
+    s: function(dateObj) {
+      return dateObj.getSeconds();
+    },
+    ss: function(dateObj) {
+      return pad(dateObj.getSeconds());
+    },
+    S: function(dateObj) {
+      return Math.round(dateObj.getMilliseconds() / 100);
+    },
+    SS: function(dateObj) {
+      return pad(Math.round(dateObj.getMilliseconds() / 10), 2);
+    },
+    SSS: function(dateObj) {
+      return pad(dateObj.getMilliseconds(), 3);
+    },
+    a: function(dateObj, i18n) {
+      return dateObj.getHours() < 12 ? i18n.amPm[0] : i18n.amPm[1];
+    },
+    A: function(dateObj, i18n) {
+      return dateObj.getHours() < 12 ? i18n.amPm[0].toUpperCase() : i18n.amPm[1].toUpperCase();
+    },
+    ZZ: function(dateObj) {
+      var o = dateObj.getTimezoneOffset();
+      return (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4);
+    }
+  };
+
   var parseFlags = {
     D: [twoDigits, function (d, v) {
       d.day = v;
@@ -149,100 +234,8 @@
 
     mask = fecha.masks[mask] || mask || fecha.masks['default'];
 
-    var D = dateObj.getDate(),
-      d = dateObj.getDay(),
-      M = dateObj.getMonth(),
-      y = dateObj.getFullYear(),
-      H = dateObj.getHours(),
-      m = dateObj.getMinutes(),
-      s = dateObj.getSeconds(),
-      S = dateObj.getMilliseconds(),
-      o = dateObj.getTimezoneOffset(),
-      flags = {
-        D: function() {
-          return dateObj.getDate();
-        },
-        DD: function() {
-          return pad(dateObj.getDate())
-        },
-        Do: function() {
-          return i18n.DoFn(D)
-        },
-        d: function() {
-          return dateObj.getDay();
-        },
-        dd: function() {
-          return pad(dateObj.getDay());
-        },
-        ddd: function() {
-          return i18n.dayNamesShort[dateObj.getDay()];
-        },
-        dddd: function() {
-          return i18n.dayNames[dateObj.getDay()];
-        },
-        M: function() {
-          return dateObj.getMonth() + 1;
-        },
-        MM: function() {
-          return pad(dateObj.getMonth() + 1);
-        },
-        MMM: function() {
-          return i18n.monthNamesShort[dateObj.getMonth()];
-        },
-        MMMM: function() {
-          return i18n.monthNames[dateObj.getMonth()];
-        },
-        YY: function() {
-          return String(dateObj.getFullYear()).substr(2);
-        },
-        YYYY: function() {
-          return dateObj.getFullYear();
-        },
-        h: function() {
-          return dateObj.getHours() % 12 || 12;
-        },
-        hh: function() {
-          return pad(dateObj.getHours() % 12 || 12);
-        },
-        H: function() {
-          return dateObj.getHours();
-        },
-        HH: function() {
-          return pad(dateObj.getHours());
-        },
-        m: function() {
-          return dateObj.getMinutes();
-        },
-        mm: function() {
-          return pad(dateObj.getMinutes());
-        },
-        s: function() {
-          return dateObj.getSeconds();
-        },
-        ss: function() {
-          return pad(dateObj.getSeconds());
-        },
-        S: function() {
-          return Math.round(dateObj.getMilliseconds() / 100);
-        },
-        SS: function() {
-          return pad(Math.round(dateObj.getMilliseconds() / 10), 2);
-        },
-        SSS: function() { return pad(dateObj.getMilliseconds(), 3); },
-        a: function() {
-          return dateObj.getHours() < 12 ? i18n.amPm[0] : i18n.amPm[1]
-        },
-        A: function() {
-          return dateObj.getHours() < 12 ? i18n.amPm[0].toUpperCase() : i18n.amPm[1].toUpperCase()
-        },
-        ZZ: function() {
-          var o = dateObj.getTimezoneOffset();
-          return (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4);
-        }
-      };
-
     return mask.replace(token, function ($0) {
-      return $0 in flags ? flags[$0]() : $0.slice(1, $0.length - 1);
+      return $0 in formatFlags ? formatFlags[$0](dateObj, i18n) : $0.slice(1, $0.length - 1);
     });
   };
 
