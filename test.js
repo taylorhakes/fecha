@@ -39,9 +39,29 @@ testParse('milliseconds time', '10:20:30.123', 'HH:mm:ss.SSS', new Date(year, 0,
 testParse('milliseconds medium', '10:20:30.12', 'HH:mm:ss.SS', new Date(year, 0, 1, 10, 20, 30, 120));
 testParse('milliseconds short', '10:20:30.1', 'HH:mm:ss.S', new Date(year, 0, 1, 10, 20, 30, 100));
 testParse('timezone offset', '09:20:31 GMT-0500 (EST)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 14, 20, 31)));
-testParse('UTC timezone offset', '09:20:31 GMT-0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9,20, 31)));
-testParse('UTC timezone offset without GMT', '09:20:31 -0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9,20, 31)));
+testParse('UTC timezone offset', '09:20:31 GMT-0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9, 20, 31)));
+testParse('UTC timezone offset without GMT', '09:20:31 -0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9, 20, 31)));
 testParse('invalid date', 'hello', 'HH:mm:ss ZZ', false);
+test('i18n month short parse', function() {
+  assert.equal(+fecha.parse('def 3rd, 2021', 'MMM Do, YYYY', {
+    monthNamesShort: ['Adk', 'Def', 'Sdfs', 'Sdf', 'Sdh', 'Tre', 'Iis', 'Swd', 'Ews', 'Sdf', 'Qaas', 'Ier']
+  }), +new Date(2021, 1, 3));
+});
+test('i18n month long parse', function() {
+  assert.equal(+fecha.parse('defg 3rd, 2021', 'MMMM Do, YYYY', {
+    monthNames: ['Adk', 'Defg', 'Sdfs', 'Sdf', 'Sdh', 'Tre', 'Iis', 'Swd', 'Ews', 'Sdf', 'Qaas', 'Ier']
+  }), +new Date(2021, 1, 3));
+});
+test('i18n pm parse', function() {
+  assert.equal(+fecha.parse('2018-05-02 10GD', 'YYYY-MM-DD HHA', {
+    amPm: ['sd', 'gd']
+  }), +new Date(2018,4,2,22));
+});
+test('i18n am parse', function() {
+  assert.equal(+fecha.parse('2018-05-02 10SD', 'YYYY-MM-DD HHA', {
+    amPm: ['sd', 'gd']
+  }), +new Date(2018,4,2,10));
+});
 test('invalid date no format', function () {
   assert.throws(function () {
     fecha.parse('hello');
@@ -84,7 +104,11 @@ testFormat('Year long', new Date(2001, 2, 5), 'YYYY', '2001');
 testFormat('Hour 12 hour short', new Date(2001, 2, 5, 6), 'h', '6');
 testFormat('Hour 12 hour padded', new Date(2001, 2, 5, 6), 'hh', '06');
 testFormat('Hour 12 hour short 2', new Date(2001, 2, 5, 14), 'h', '2');
+testFormat('Hour 12 hour short noon', new Date(2001, 2, 5, 12), 'h', '12');
+testFormat('Hour 12 hour short midnight', new Date(2001, 2, 5, 0), 'h', '12');
 testFormat('Hour 12 hour padded 2', new Date(2001, 2, 5, 14), 'hh', '02');
+testFormat('Hour 12 hour padded noon', new Date(2001, 2, 5, 12), 'hh', '12');
+testFormat('Hour 12 hour padded midnight', new Date(2001, 2, 5, 0), 'hh', '12');
 testFormat('Hour 24 hour short', new Date(2001, 2, 5, 13), 'H', '13');
 testFormat('Hour 24 hour padded', new Date(2001, 2, 5, 13), 'HH', '13');
 testFormat('Hour 24 hour short', new Date(2001, 2, 5, 3), 'H', '3');
@@ -112,7 +136,8 @@ testFormat('ampm AM', new Date(2001, 2, 5, 3, 7, 2, 5), 'A', 'AM');
 testFormat('ampm PM', new Date(2001, 2, 5, 16, 7, 2, 5), 'A', 'PM');
 
 // th, st, nd, rd
-testFormat('th', new Date(2001, 2, 11), 'Do', '11th');
+testFormat('th 11', new Date(2001, 2, 11), 'Do', '11th');
+testFormat('th 6', new Date(2001, 2, 6), 'Do', '6th');
 testFormat('st', new Date(2001, 2, 21), 'Do', '21st');
 testFormat('nd', new Date(2001, 2, 2), 'Do', '2nd');
 testFormat('rd', new Date(2001, 2, 23), 'Do', '23rd');
@@ -134,6 +159,15 @@ testFormat('D-M-YYYY', new Date(2043, 8, 18, 2, 1, 9, 5), 'D-M-YYYY', '18-9-2043
 testFormat('current date', new Date(), 'YYYY', '' + (new Date()).getFullYear());
 testFormat('mask', new Date(1999, 0, 2), 'mediumDate', 'Jan 2, 1999');
 testFormat('number date', 1325376000000, 'YYY-MM-DD HH:mm:ss', fecha.format(new Date(Date.UTC(2012,0,1)), 'YYY-MM-DD HH:mm:ss'));
+test('i18n am format', function() {
+  assert.equal(fecha.format(new Date(2018,4,2,10), 'YYYY-MM-DD HHA', {
+    amPm: ['sd', 'gd'],
+    DoFn: function() {}
+  }), '2018-05-02 10SD');
+});
+test('no format', function() {
+  assert.equal(fecha.format(new Date(2017,4,2,10)), 'Tue May 02 2017 10:00:00');
+});
 
 test('Invalid date', function () {
   assert.throws(function () {
