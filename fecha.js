@@ -137,6 +137,14 @@
     ZZ: function(dateObj) {
       var o = dateObj.getTimezoneOffset();
       return (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4);
+    },
+    X: function(dateObj) {
+      var o = dateObj.getTime();
+      return o;
+    },
+    XX: function(dateObj) {
+      var o = Math.round(dateObj.getTime() / 1000);
+      return o;
     }
   };
 
