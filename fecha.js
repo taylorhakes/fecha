@@ -139,12 +139,10 @@
       return (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4);
     },
     x: function(dateObj) {
-      var o = dateObj.getTime();
-      return o;
+      return dateObj.getTime();
     },
     X: function(dateObj) {
-      var o = Math.round(dateObj.getTime() / 1000);
-      return o;
+      return Math.round(dateObj.getTime() / 1000);
     }
   };
 
