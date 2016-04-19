@@ -6,7 +6,7 @@
    * @class fecha
    */
   var fecha = {};
-  var token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|x|X|fromnow|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
+  var token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|x|X|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
   var twoDigits = /\d\d?/;
   var threeDigits = /\d{3}/;
   var fourDigits = /\d{4}/;
@@ -52,61 +52,7 @@
     amPm: ['am', 'pm'],
     DoFn: function DoFn(D) {
       return D + ['th', 'st', 'nd', 'rd'][D % 10 > 3 ? 0 : (D - D % 10 !== 10) * D % 10];
-    },
-    relativeTime: {
-      future: "in %s",
-      past:   "%s ago",
-      s:  "seconds",
-      m:  "a minute",
-      mm: "%d minutes",
-      h:  "an hour",
-      hh: "%d hours",
-      d:  "a day",
-      dd: "%d days",
-      M:  "a month",
-      MM: "%d months",
-      y:  "a year",
-      yy: "%d years"
     }
-  };
-
-  function parseTime (time) {
-    var delta = new Date() - time;
-
-    return {minutesFromNow: Math.floor((Math.abs(delta) / 1000) / 60), future: (delta < 0 ? true : false)}
-  };
-
-  function fromnow (time) {
-    var info = parseTime(time),
-        delta = info.minutesFromNow,
-        result = '',
-        i18n = fecha.i18n.relativeTime;
-
-    if (delta === 0) {
-      result = 'less than a minute';
-    } else if (delta === 1) {
-      result = i18n.m.replace("%d", 1);
-    } else if (delta >= 2 && delta <= 44) {
-      result = i18n.m.replace("%d", delta);
-    } else if (delta >= 45 && delta <= 89) {
-      result = i18n.h.replace("%d", 1);
-    } else if (delta >= 90 && delta <= 1439) {
-      result = i18n.hh.replace("%d", Math.floor(delta / 60));
-    } else if (delta >= 1440 && delta <= 2519) {
-      result = i18n.d.replace("%d", 1);
-    } else if (delta >= 2520 && delta <= 43199) {
-      result = i18n.dd.replace("%d", Math.floor(delta / 1440));
-    } else if (delta >= 43200 && delta <= 86399) {
-      result = i18n.m.replace("%d", 1);
-    } else if (delta >= 86400 && delta <= 525599) {
-      result = i18n.mm.replace("%d", Math.floor(delta / 43200));
-    } else if (delta >= 525600 && delta <= 655199) {
-      result = i18n.y.replace("%d", 1);
-    } else {
-      result = i18n.yy.replace("%d", Math.floor(delta / 525600));
-    }
-
-    return (info.future ? i18n.future : i18n.past).replace("%s", result);
   };
 
   var formatFlags = {
@@ -193,13 +139,12 @@
       return (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4);
     },
     x: function(dateObj) {
-      return dateObj.getTime();
+      var o = dateObj.getTime();
+      return o;
     },
     X: function(dateObj) {
-      return Math.round(dateObj.getTime() / 1000);
-    },
-    fromnow: function(dateObj) {
-      return fromnow(dateObj);
+      var o = Math.round(dateObj.getTime() / 1000);
+      return o;
     }
   };
 
