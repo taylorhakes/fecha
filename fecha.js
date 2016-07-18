@@ -11,6 +11,7 @@
   var threeDigits = /\d{3}/;
   var fourDigits = /\d{4}/;
   var word = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i;
+  var twoDigitsWord = new RegExp(twoDigits.source + word.source);
   var noop = function () {
   };
 
@@ -144,6 +145,9 @@
     D: [twoDigits, function (d, v) {
       d.day = v;
     }],
+    Do: [twoDigitsWord, function (d, v) {
+      d.day = parseInt(v);
+    }],
     M: [twoDigits, function (d, v) {
       d.month = v - 1;
     }],
@@ -195,7 +199,7 @@
   };
   parseFlags.dd = parseFlags.d;
   parseFlags.dddd = parseFlags.ddd;
-  parseFlags.Do = parseFlags.DD = parseFlags.D;
+  parseFlags.DD = parseFlags.D;
   parseFlags.mm = parseFlags.m;
   parseFlags.hh = parseFlags.H = parseFlags.HH = parseFlags.h;
   parseFlags.MM = parseFlags.M;
