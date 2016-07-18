@@ -22,6 +22,8 @@ testParse('basic date parse with time', '2012/05/03 05:01:40', 'YYYY/MM/DD HH:mm
 testParse('date with different slashes', '2012-05-03 05:01:40', 'YYYY-MM-DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
 testParse('date with different order', '11-7-97', 'D-M-YY', new Date(1997, 6, 11));
 testParse('date very short', '2-8-04', 'D-M-YY', new Date(2004, 7, 2));
+testParse('ordinal day 3rd', '3rd May', 'Do MMM', new Date(year, 4, 3));
+testParse('ordinal day 23rd', '23rd May', 'Do MMM', new Date(year, 4, 23));
 testParse('compact', '11081997', 'MMDDYYYY', new Date(1997, 10, 8));
 testParse('month names', 'March 3rd, 1999', 'MMMM Do, YYYY', new Date(1999, 2, 3));
 testParse('month names short', 'Jun 12, 2003', 'MMM D, YYYY', new Date(2003, 5, 12));
