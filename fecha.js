@@ -144,6 +144,9 @@
     D: [twoDigits, function (d, v) {
       d.day = v;
     }],
+    Do: [new RegExp(twoDigits.source + word.source), function (d, v) {
+      d.day = parseInt(v, 10);
+    }],
     M: [twoDigits, function (d, v) {
       d.month = v - 1;
     }],
@@ -195,7 +198,7 @@
   };
   parseFlags.dd = parseFlags.d;
   parseFlags.dddd = parseFlags.ddd;
-  parseFlags.Do = parseFlags.DD = parseFlags.D;
+  parseFlags.DD = parseFlags.D;
   parseFlags.mm = parseFlags.m;
   parseFlags.hh = parseFlags.H = parseFlags.HH = parseFlags.h;
   parseFlags.MM = parseFlags.M;
