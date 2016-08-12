@@ -174,6 +174,9 @@ test('no format', function() {
   assert.equal(fecha.format(new Date(2017,4,2,10)), 'Tue May 02 2017 10:00:00');
 });
 
+testFormat('literal in format', new Date(2001, 2, 5, 6, 7, 2, 5), '[on] MM-DD-YYYY [at] HH:mm',
+  'on 03-05-2001 at 06:07');
+
 test('Invalid date', function () {
   assert.throws(function () {
     fecha.format('hello', 'YYYY');
