@@ -17,6 +17,10 @@ function testFormat(name, dateObj, format, expected) {
   });
 }
 
+function suite(name, suiteBody) {
+  suiteBody();
+}
+
 testParse('basic date parse', '2012/05/03', 'YYYY/MM/DD', new Date(2012, 4, 3));
 testParse('basic date parse with time', '2012/05/03 05:01:40', 'YYYY/MM/DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
 testParse('date with different slashes', '2012-05-03 05:01:40', 'YYYY-MM-DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
@@ -172,6 +176,20 @@ test('i18n am format', function() {
 });
 test('no format', function() {
   assert.equal(fecha.format(new Date(2017,4,2,10)), 'Tue May 02 2017 10:00:00');
+});
+
+// Literals
+suite('literals', function() {
+  var date = new Date(2009, 1, 14, 15, 25, 50, 125);
+
+  testFormat('literal in format', date, '[on] MM-DD-YYYY [at] HH:mm',
+    'on 02-14-2009 at 15:25');
+  testFormat('one literal', date, '[day]', 'day');
+  testFormat('two literals', date, '[day] YY [YY]', 'day 09 YY');
+  testFormat('incomplete literal', date, '[YY', '[09');
+  testFormat('literal inside literal', date, '[[YY]]', '[YY]');
+  testFormat('bracket inside literal', date, '[[]', '[');
+  testFormat('new lines', date, 'YYYY[\n]DD[\n]', '2009\n14\n');
 });
 
 test('Invalid date', function () {

@@ -61,6 +61,8 @@ fecha.format(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A')
 fecha.format(new Date(2015, 10, 20), 'mediumDate'); // 'Nov 20, 2015'
 fecha.format(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '05:30'
 
+// Literals
+fecha.format(new Date(2001, 2, 5, 6, 7, 2, 5), '[on] MM-DD-YYYY [at] HH:mm'); // 'on 03-05-2001 at 06:07'
 ```
 
 #### Parsing

@@ -11,6 +11,7 @@
   var threeDigits = /\d{3}/;
   var fourDigits = /\d{4}/;
   var word = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i;
+  var literal = /\[([^]*?)\]/gm;
   var noop = function () {
   };
 
@@ -237,8 +238,20 @@
 
     mask = fecha.masks[mask] || mask || fecha.masks['default'];
 
-    return mask.replace(token, function ($0) {
+    var literals = [];
+
+    // Make literals inactive by replacing them with ??
+    mask = mask.replace(literal, function($0, $1) {
+      literals.push($1);
+      return '??';
+    });
+    // Apply formatting rules
+    mask = mask.replace(token, function ($0) {
       return $0 in formatFlags ? formatFlags[$0](dateObj, i18n) : $0.slice(1, $0.length - 1);
+    });
+    // Inline literal values back into the formatted value
+    return mask.replace(/\?\?/g, function() {
+      return literals.shift();
     });
   };
 
