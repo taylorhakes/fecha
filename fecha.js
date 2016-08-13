@@ -240,17 +240,17 @@
 
     var literals = [];
 
-    //Make literals inactive by replacing them with _
+    // Make literals inactive by replacing them with ??
     mask = mask.replace(literal, function($0, $1) {
       literals.push($1);
-      return '_';
+      return '??';
     });
-    //Apply formatting rules
+    // Apply formatting rules
     mask = mask.replace(token, function ($0) {
       return $0 in formatFlags ? formatFlags[$0](dateObj, i18n) : $0.slice(1, $0.length - 1);
     });
-    //Inline literal values back into the formatted value
-    return mask.replace(/_/g, function() {
+    // Inline literal values back into the formatted value
+    return mask.replace(/\?\?/g, function() {
       return literals.shift();
     });
   };
