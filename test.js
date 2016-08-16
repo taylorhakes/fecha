@@ -5,6 +5,12 @@ var assert = painless.assert;
 var today = new Date();
 var year = today.getFullYear();
 
+function testValid(name, str, format, expected) {
+  test(name, function() {
+    assert.equal(fecha.valid(str, format), expected);
+  });
+}
+
 function testInfo(name, str, format, expected) {
   test(name, function() {
     assert.deepEqual(fecha.info(str, format), expected);
@@ -26,6 +32,12 @@ function testFormat(name, dateObj, format, expected) {
 function suite(name, suiteBody) {
   suiteBody();
 }
+
+testValid('identifies valid dates', '1985-12-8', 'YYYY-MM-DD', true);
+testValid('identifies invalid month', '2015-13-29', 'YYYY-MM-DD', false);
+testValid('identifies invalid day', '2015-1-0', 'YYYY-MM-DD', false);
+testValid('identifies invalid day relative to month', '2015-2-29', 'YYYY-MM-DD', false);
+testValid('identifies bogus dates', 'hello', 'YYYY-MM-DD', false);
 
 testInfo('basic date info', '2012/05/03', 'YYYY/MM/DD', {year:2012, month: 4, day: 3});
 testInfo('basic date info with time', '2012/05/03 05:01:40', 'YYYY/MM/DD HH:mm:ss', {year:2012, month: 4, day: 3, hour: 5, minute: 1, second: 40});

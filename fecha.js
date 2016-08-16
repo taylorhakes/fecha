@@ -360,6 +360,44 @@
     return date;
   };
 
+  /**
+   * Evaluates if a date is valid or not
+   * @method valid
+   * @param {string} dateStr Date string
+   * @param {string} format Date parse format
+   * @returns {boolean}
+   */
+  fecha.valid = function(dateStr, format, i18nSettings) {
+    try {
+      var info1 = fecha.info(dateStr, format, i18nSettings);
+      if (!info1) {
+        return false;
+      }
+
+      var info2 = fecha.info(fecha.format(fecha.parse(dateStr, format, i18nSettings), format, i18nSettings), format, i18nSettings);
+      if (!info2) {
+        return false;
+      }
+
+      var valid = true;
+      Object.keys(info1).forEach(function (key) {
+        if (info1[key] !== info2[key]) {
+          valid = false;
+        }
+      });
+      if (valid) {
+        Object.keys(info2).forEach(function (key) {
+          if (info1[key] !== info2[key]) {
+            valid = false;
+          }
+        });
+      }
+      return valid;
+    } catch (e) {
+      return false;
+    }
+  };
+
   /* istanbul ignore next */
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = fecha;
