@@ -255,18 +255,18 @@
     });
   };
 
-  /**
-   * Parse a date string into an object, changes - into /
-   * @method parse
+  /** 
+   * Retrieves info about a date string
+   * @method info
    * @param {string} dateStr Date string
    * @param {string} format Date parse format
-   * @returns {Date|boolean}
+   * @returns {Object}
    */
-  fecha.parse = function (dateStr, format, i18nSettings) {
+  fecha.info = function (dateStr, format, i18nSettings) {
     var i18n = i18nSettings || fecha.i18n;
 
     if (typeof format !== 'string') {
-      throw new Error('Invalid format in fecha.parse');
+      throw new Error('Invalid format in fecha.info');
     }
 
     format = fecha.masks[format] || format;
@@ -297,20 +297,60 @@
       return parseFlags[$0] ? '' : $0.slice(1, $0.length - 1);
     });
 
-    if (!isValid) {
-      return false;
-    }
-
-    var today = new Date();
     if (dateInfo.isPm === true && dateInfo.hour != null && +dateInfo.hour !== 12) {
       dateInfo.hour = +dateInfo.hour + 12;
     } else if (dateInfo.isPm === false && +dateInfo.hour === 12) {
       dateInfo.hour = 0;
     }
 
-    var date;
     if (dateInfo.timezoneOffset != null) {
       dateInfo.minute = +(dateInfo.minute || 0) - +dateInfo.timezoneOffset;
+    }
+
+    ['year', 'month', 'day', 'hour', 'minute', 'second', 'millisecond'].forEach(function (prop) {
+      if (dateInfo.hasOwnProperty(prop)) {
+        dateInfo[prop] = parseInt(dateInfo[prop], 10);
+      }
+    });
+
+    if (!isValid) {
+      return null;
+    }
+
+    return dateInfo;
+  };
+
+  /**
+   * Parse a date string into an object, changes - into /
+   * @method parse
+   * @param {string} dateStr Date string
+   * @param {string} format Date parse format
+   * @returns {Date|boolean}
+   */
+  fecha.parse = function (dateStr, format, i18nSettings) {
+    var i18n = i18nSettings || fecha.i18n;
+
+    if (typeof format !== 'string') {
+      throw new Error('Invalid format in fecha.parse');
+    }
+
+    format = fecha.masks[format] || format;
+
+    // Avoid regular expression denial of service, fail early for really long strings
+    // https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
+    if (dateStr.length > 1000) {
+      return false;
+    }
+
+    var dateInfo = fecha.info(dateStr, format, i18n);
+
+    if (!dateInfo) {
+      return false;
+    }
+
+    var today = new Date();
+    var date;
+    if (dateInfo.timezoneOffset != null) {
       date = new Date(Date.UTC(dateInfo.year || today.getFullYear(), dateInfo.month || 0, dateInfo.day || 1,
         dateInfo.hour || 0, dateInfo.minute || 0, dateInfo.second || 0, dateInfo.millisecond || 0));
     } else {
@@ -318,6 +358,44 @@
         dateInfo.hour || 0, dateInfo.minute || 0, dateInfo.second || 0, dateInfo.millisecond || 0);
     }
     return date;
+  };
+
+  /**
+   * Evaluates if a date is valid or not
+   * @method valid
+   * @param {string} dateStr Date string
+   * @param {string} format Date parse format
+   * @returns {boolean}
+   */
+  fecha.valid = function(dateStr, format, i18nSettings) {
+    try {
+      var info1 = fecha.info(dateStr, format, i18nSettings);
+      if (!info1) {
+        return false;
+      }
+
+      var info2 = fecha.info(fecha.format(fecha.parse(dateStr, format, i18nSettings), format, i18nSettings), format, i18nSettings);
+      if (!info2) {
+        return false;
+      }
+
+      var valid = true;
+      Object.keys(info1).forEach(function (key) {
+        if (info1[key] !== info2[key]) {
+          valid = false;
+        }
+      });
+      if (valid) {
+        Object.keys(info2).forEach(function (key) {
+          if (info1[key] !== info2[key]) {
+            valid = false;
+          }
+        });
+      }
+      return valid;
+    } catch (e) {
+      return false;
+    }
   };
 
   /* istanbul ignore next */

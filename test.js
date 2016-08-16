@@ -5,6 +5,18 @@ var assert = painless.assert;
 var today = new Date();
 var year = today.getFullYear();
 
+function testValid(name, str, format, expected) {
+  test(name, function() {
+    assert.equal(fecha.valid(str, format), expected);
+  });
+}
+
+function testInfo(name, str, format, expected) {
+  test(name, function() {
+    assert.deepEqual(fecha.info(str, format), expected);
+  });
+}
+
 function testParse(name, str, format, date) {
   test(name, function() {
     assert.equal(+fecha.parse(str, format), +date);
@@ -20,6 +32,19 @@ function testFormat(name, dateObj, format, expected) {
 function suite(name, suiteBody) {
   suiteBody();
 }
+
+testValid('identifies valid dates', '1985-12-8', 'YYYY-MM-DD', true);
+testValid('identifies invalid month', '2015-13-29', 'YYYY-MM-DD', false);
+testValid('identifies invalid day', '2015-1-0', 'YYYY-MM-DD', false);
+testValid('identifies invalid day relative to month', '2015-2-29', 'YYYY-MM-DD', false);
+testValid('identifies bogus dates', 'hello', 'YYYY-MM-DD', false);
+
+testInfo('basic date info', '2012/05/03', 'YYYY/MM/DD', {year:2012, month: 4, day: 3});
+testInfo('basic date info with time', '2012/05/03 05:01:40', 'YYYY/MM/DD HH:mm:ss', {year:2012, month: 4, day: 3, hour: 5, minute: 1, second: 40});
+testInfo('handles am', '2000-01-01 11am', 'YYYY-MM-DD hha', {year: 2000, month: 0, day: 1, hour: 11, isPm: false});
+testInfo('handles pm', '2000-01-01 12pm', 'YYYY-MM-DD hha', {year: 2000, month: 0, day: 1, hour: 12, isPm: true});
+testInfo('only returns what is provided', '3rd May', 'Do MMM', {month: 4, day: 3});
+testInfo('handles milliseconds', '10:20:30.123', 'HH:mm:ss.SSS', {hour: 10, minute: 20, second: 30, millisecond: 123});
 
 testParse('basic date parse', '2012/05/03', 'YYYY/MM/DD', new Date(2012, 4, 3));
 testParse('basic date parse with time', '2012/05/03 05:01:40', 'YYYY/MM/DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
