@@ -17,11 +17,8 @@ function testFormat(name, dateObj, format, expected) {
   });
 }
 
-function suite(name, suiteBody) {
-  suiteBody();
-}
-
 testParse('basic date parse', '2012/05/03', 'YYYY/MM/DD', new Date(2012, 4, 3));
+testParse('compact basic date parse', '20120503', 'YYYYMMDD', new Date(2012, 4, 3));
 testParse('basic date parse with time', '2012/05/03 05:01:40', 'YYYY/MM/DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
 testParse('date with different slashes', '2012-05-03 05:01:40', 'YYYY-MM-DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
 testParse('date with different order', '11-7-97', 'D-M-YY', new Date(1997, 6, 11));
@@ -168,6 +165,7 @@ testFormat('D-M-YYYY', new Date(2043, 8, 18, 2, 1, 9, 5), 'D-M-YYYY', '18-9-2043
 testFormat('current date', new Date(), 'YYYY', '' + (new Date()).getFullYear());
 testFormat('mask', new Date(1999, 0, 2), 'mediumDate', 'Jan 2, 1999');
 testFormat('number date', 1325376000000, 'YYY-MM-DD HH:mm:ss', fecha.format(new Date(Date.UTC(2012,0,1)), 'YYY-MM-DD HH:mm:ss'));
+testFormat('compact date format', new Date(2012, 4, 3), 'YYYYMMDD', '20120503');
 test('i18n am format', function() {
   assert.equal(fecha.format(new Date(2018,4,2,10), 'YYYY-MM-DD HHA', {
     amPm: ['sd', 'gd'],
@@ -179,18 +177,15 @@ test('no format', function() {
 });
 
 // Literals
-suite('literals', function() {
-  var date = new Date(2009, 1, 14, 15, 25, 50, 125);
+var date = new Date(2009, 1, 14, 15, 25, 50, 125);
 
-  testFormat('literal in format', date, '[on] MM-DD-YYYY [at] HH:mm',
-    'on 02-14-2009 at 15:25');
-  testFormat('one literal', date, '[day]', 'day');
-  testFormat('two literals', date, '[day] YY [YY]', 'day 09 YY');
-  testFormat('incomplete literal', date, '[YY', '[09');
-  testFormat('literal inside literal', date, '[[YY]]', '[YY]');
-  testFormat('bracket inside literal', date, '[[]', '[');
-  testFormat('new lines', date, 'YYYY[\n]DD[\n]', '2009\n14\n');
-});
+testFormat('literal in format', date, '[on] MM-DD-YYYY [at] HH:mm', 'on 02-14-2009 at 15:25');
+testFormat('one literal', date, '[day]', 'day');
+testFormat('two literals', date, '[day] YY [YY]', 'day 09 YY');
+testFormat('incomplete literal', date, '[YY', '[09');
+testFormat('literal inside literal', date, '[[YY]]', '[YY]');
+testFormat('bracket inside literal', date, '[[]', '[');
+testFormat('new lines', date, 'YYYY[\n]DD[\n]', '2009\n14\n');
 
 test('Invalid date', function () {
   assert.throws(function () {
