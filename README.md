@@ -98,7 +98,7 @@ fecha.i18n = {
 #### Custom Named Masks
 ```js
 fecha.masks = {
-	'default': 'ddd MMM DD YYYY HH:mm:ss',
+	default: 'ddd MMM DD YYYY HH:mm:ss',
 	shortDate: 'M/D/YY',
 	mediumDate: 'MMM D, YYYY',
 	longDate: 'MMMM D, YYYY',
