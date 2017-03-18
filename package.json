@@ -30,5 +30,9 @@
     "nyc": "^5.6.0",
     "painless": "^0.9.1",
     "uglify-js": "^2.6.1"
-  }
+  },
+  "files": [
+    "fecha.js",
+    "fecha.min.js"
+  ]
 }
