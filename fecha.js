@@ -188,7 +188,8 @@
         d.isPm = true;
       }
     }],
-    ZZ: [/[\+\-]\d\d:?\d\d/, function (d, v) {
+    ZZ: [/([\+\-]\d\d:?\d\d|Z)/, function (d, v) {
+      if (v === 'Z') v = '+00:00';
       var parts = (v + '').match(/([\+\-]|\d\d)/gi), minutes;
 
       if (parts) {
