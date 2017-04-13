@@ -4,8 +4,8 @@
   "description": "Date formatting and parsing",
   "main": "fecha.js",
   "scripts": {
-    "test": "eslint fecha.js && nyc --cache --reporter=text node test.js",
-    "build": "uglifyjs fecha.js -m -o fecha.min.js"
+    "test": "eslint fecha.js fecha.strict.js && nyc --cache --reporter=text painless test.*",
+    "build": "uglifyjs fecha.js -m -o fecha.min.js && uglifyjs fecha.strict.js -m -o fecha.strict.min.js"
   },
   "repository": {
     "type": "git",
