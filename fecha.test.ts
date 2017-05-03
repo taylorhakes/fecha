@@ -68,7 +68,8 @@ fecha.masks = {
 };
 
 // test add custom named mask.
-fecha.masks.myMask = "HH:mm:ss YY/MM/DD";
+// fecha.masks.myMask = "HH:mm:ss YY/MM/DD"; does not work yet.
+fecha.masks["myMask"] = "HH:mm:ss YY/MM/DD";
 
 // test fecha.format without i18nSettings, with Date object.
 fecha.format(new Date(2014, 5, 6, 14, 10, 45), "myMask");
