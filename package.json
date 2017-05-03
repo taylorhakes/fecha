@@ -34,5 +34,6 @@
   "files": [
     "fecha.js",
     "fecha.min.js"
-  ]
+  ],
+  "types": "./fecha.d.ts"
 }
