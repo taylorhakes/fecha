@@ -6,7 +6,7 @@
    * @class fecha
    */
   var fecha = {};
-  var token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
+  var token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|x|X|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
   var twoDigits = /\d\d?/;
   var threeDigits = /\d{3}/;
   var fourDigits = /\d{4}/;
@@ -138,6 +138,12 @@
     ZZ: function(dateObj) {
       var o = dateObj.getTimezoneOffset();
       return (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4);
+    },
+    x: function(dateObj) {
+      return dateObj.getTime();
+    },
+    X: function(dateObj) {
+      return Math.round(dateObj.getTime() / 1000);
     }
   };
 
