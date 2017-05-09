@@ -210,7 +210,7 @@
 
   // Some common format strings
   fecha.masks = {
-    default: 'ddd MMM DD YYYY HH:mm:ss',
+    'default': 'ddd MMM DD YYYY HH:mm:ss',
     shortDate: 'M/D/YY',
     mediumDate: 'MMM D, YYYY',
     longDate: 'MMMM D, YYYY',
