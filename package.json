@@ -33,7 +33,8 @@
   },
   "files": [
     "fecha.js",
-    "fecha.min.js"
+    "fecha.min.js",
+    "fecha.d.ts"
   ],
   "types": "./fecha.d.ts"
 }
