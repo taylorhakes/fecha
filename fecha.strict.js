@@ -192,7 +192,7 @@
         d.isPm = true;
       }
     }],
-    ZZ: ['[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d', function (d, v) {
+    ZZ: ['[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z', function (d, v) {
       var parts = (v + '').match(/([\+\-]|\d\d)/gi), minutes;
 
       if (parts) {
