@@ -19,6 +19,7 @@ function testFormat(name, dateObj, format, expected) {
 
 testParse('basic date parse', '2012/05/03', 'YYYY/MM/DD', new Date(2012, 4, 3));
 testParse('compact basic date parse', '20120503', 'YYYYMMDD', new Date(2012, 4, 3));
+testParse('Date with leading zeros', '0001/01/01', 'YYYY/MM/DD', new Date(1, 0, 1));
 testParse('basic date parse with time', '2012/05/03 05:01:40', 'YYYY/MM/DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
 testParse('date with different slashes', '2012-05-03 05:01:40', 'YYYY-MM-DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
 testParse('date with different order', '11-7-97', 'D-M-YY', new Date(1997, 6, 11));
@@ -167,6 +168,7 @@ testFormat('current date', new Date(), 'YYYY', '' + (new Date()).getFullYear());
 testFormat('mask', new Date(1999, 0, 2), 'mediumDate', 'Jan 2, 1999');
 testFormat('number date', 1325376000000, 'YYY-MM-DD HH:mm:ss', fecha.format(new Date(Date.UTC(2012,0,1)), 'YYY-MM-DD HH:mm:ss'));
 testFormat('compact date format', new Date(2012, 4, 3), 'YYYYMMDD', '20120503');
+testFormat('date with leading zeros', new Date(999, 0, 1), 'YYYY/MM/DD', '0999/01/01');
 test('i18n am format', function() {
   assert.equal(fecha.format(new Date(2018,4,2,10), 'YYYY-MM-DD HHA', {
     amPm: ['sd', 'gd'],

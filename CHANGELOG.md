@@ -1,3 +1,6 @@
+### 2.3.3
+Fixed bug with year 999 not having leading zero
+
 ### 2.3.2
 Added typescript definitions to NPM
 

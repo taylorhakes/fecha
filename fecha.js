@@ -94,7 +94,7 @@
       return String(dateObj.getFullYear()).substr(2);
     },
     YYYY: function(dateObj) {
-      return dateObj.getFullYear();
+      return pad(dateObj.getFullYear(), 4);
     },
     h: function(dateObj) {
       return dateObj.getHours() % 12 || 12;
