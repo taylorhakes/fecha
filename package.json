@@ -2,10 +2,10 @@
   "name": "fecha",
   "version": "2.3.3",
   "description": "Date formatting and parsing",
-  "main": "fecha.min.js",
-  "module": "fecha.js",
+  "main": "lib/fecha.umd.js",
+  "module": "src/fecha.js",
   "scripts": {
-    "test": "eslint fecha.js fecha.strict.js && nyc --cache --reporter=text painless test.*",
+    "test": "eslint src && nyc --cache --reporter=text painless test.*",
     "build": "NODE_ENV=production rollup -c"
   },
   "repository": {
