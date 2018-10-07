@@ -2,10 +2,11 @@
   "name": "fecha",
   "version": "2.3.3",
   "description": "Date formatting and parsing",
-  "main": "fecha.js",
+  "main": "lib/fecha.umd.js",
+  "module": "src/fecha.js",
   "scripts": {
-    "test": "eslint fecha.js fecha.strict.js && nyc --cache --reporter=text painless test.*",
-    "build": "uglifyjs fecha.js -m -o fecha.min.js && uglifyjs fecha.strict.js -m -o fecha.strict.min.js"
+    "test": "eslint src && nyc --cache --reporter=text painless test.*",
+    "build": "NODE_ENV=production rollup -c"
   },
   "repository": {
     "type": "git",
@@ -29,12 +30,15 @@
     "eslint": "^2.4.0",
     "nyc": "^5.6.0",
     "painless": "^0.9.1",
-    "uglify-js": "^2.6.1"
+    "rollup": "^0.59.0",
+    "rollup-plugin-uglify": "^3.0.0"
   },
   "files": [
     "fecha.js",
     "fecha.min.js",
-    "fecha.d.ts"
+    "fecha.d.ts",
+    "fecha.strict.js",
+    "fecha.strict.min.js"
   ],
   "types": "./fecha.d.ts"
 }

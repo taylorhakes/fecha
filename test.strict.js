@@ -1,5 +1,5 @@
 var painless = require('painless');
-var fecha = require('./fecha.strict');
+var fecha = require('./dist/fecha.strict.min.js');
 var test = painless.createGroup();
 var assert = painless.assert;
 var today = new Date();

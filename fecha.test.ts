@@ -1,4 +1,4 @@
-import fecha = require('./fecha.js');
+import fecha = require('./src/fecha.js');
 
 // test fecha.parse
 fecha.parse("February 3rd, 2014", "MMMM Do, YYYY");
