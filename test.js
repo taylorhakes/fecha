@@ -17,18 +17,18 @@ function testFormat(name, dateObj, format, expected) {
   });
 }
 
+testParse('invalid', '2016-9876-123', 'YYYY-MM-DD', null);
 testParse('basic date parse', '2012/05/03', 'YYYY/MM/DD', new Date(2012, 4, 3));
 testParse('compact basic date parse', '20120503', 'YYYYMMDD', new Date(2012, 4, 3));
-testParse('Date with leading zeros', '0001/01/01', 'YYYY/MM/DD', new Date(1, 0, 1));
 testParse('basic date parse with time', '2012/05/03 05:01:40', 'YYYY/MM/DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
 testParse('date with different slashes', '2012-05-03 05:01:40', 'YYYY-MM-DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
 testParse('date with different order', '11-7-97', 'D-M-YY', new Date(1997, 6, 11));
 testParse('date very short', '2-8-04', 'D-M-YY', new Date(2004, 7, 2));
 testParse('ordinal day 3rd', '3rd May', 'Do MMM', new Date(year, 4, 3));
 testParse('ordinal day 23rd, 2013', '23rd May, 2013', 'Do MMM, YYYY', new Date(2013, 4, 23));
-testParse('ordinal day 12th, 2002', 'nd12 Nov, 2002', 'Do MMM, YYYY', false);
-testParse('ordinal day 13th, 1995', '13thDec, 1995', 'DoMMM, YYYY', new Date(1995, 11, 13));
-testParse('ordinal day 13th, 1995', '1stFebruary, 1982', 'DoMMMM, YYYY', new Date(1982, 1, 1));
+testParse('ordinal day 12th, 2002', 'nd12 Nov, 2002', 'Do MMM, YYYY', new Date(2002, 10, 12));
+testParse('13th Dec, 1995', '13th Dec, 1995', 'Do MMM, YYYY', new Date(1995, 11, 13));
+testParse('1st February, 1982', '1st February, 1982', 'Do MMMM, YYYY', new Date(1982, 1, 1));
 testParse('compact', '11081997', 'MMDDYYYY', new Date(1997, 10, 8));
 testParse('month names', 'March 3rd, 1999', 'MMMM Do, YYYY', new Date(1999, 2, 3));
 testParse('month names short', 'Jun 12, 2003', 'MMM D, YYYY', new Date(2003, 5, 12));
@@ -47,9 +47,9 @@ testParse('milliseconds medium', '10:20:30.12', 'HH:mm:ss.SS', new Date(year, 0,
 testParse('milliseconds short', '10:20:30.1', 'HH:mm:ss.S', new Date(year, 0, 1, 10, 20, 30, 100));
 testParse('timezone offset', '09:20:31 GMT-0500 (EST)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 14, 20, 31)));
 testParse('UTC timezone offset', '09:20:31 GMT-0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9, 20, 31)));
-testParse('UTC timezone offset without explicit offset', '09:20:31 Z', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9, 20, 31)));
+testParse('UTC timezone offset without explicit offset', '09:20:31Z', 'HH:mm:ssZZ', new Date(year, 0, 1, 9, 20, 31));
 testParse('UTC timezone offset without GMT', '09:20:31 -0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9, 20, 31)));
-testParse('invalid date', 'hello', 'HH:mm:ss ZZ', false);
+testParse('invalid date', 'hello', 'HH:mm:ss ZZ', null);
 test('i18n month short parse', function() {
   assert.equal(+fecha.parse('def 3rd, 2021', 'MMM Do, YYYY', {
     monthNamesShort: ['Adk', 'Def', 'Sdfs', 'Sdf', 'Sdh', 'Tre', 'Iis', 'Swd', 'Ews', 'Sdf', 'Qaas', 'Ier']
@@ -80,12 +80,12 @@ test('no format specified', function () {
     fecha.parse('2014-11-05', false);
   });
 });
-test('long input false', function () {
+test('long input null', function () {
   var input = '';
   for (var i = 0; i < 1002; i++) {
     input += '1';
   }
-  assert.isFalse(fecha.parse(input, 'HH'));
+  assert.equal(fecha.parse(input, 'HH'), null);
 });
 
 // Day of the month
@@ -168,7 +168,6 @@ testFormat('current date', new Date(), 'YYYY', '' + (new Date()).getFullYear());
 testFormat('mask', new Date(1999, 0, 2), 'mediumDate', 'Jan 2, 1999');
 testFormat('number date', 1325376000000, 'YYY-MM-DD HH:mm:ss', fecha.format(new Date(Date.UTC(2012,0,1)), 'YYY-MM-DD HH:mm:ss'));
 testFormat('compact date format', new Date(2012, 4, 3), 'YYYYMMDD', '20120503');
-testFormat('date with leading zeros', new Date(999, 0, 1), 'YYYY/MM/DD', '0999/01/01');
 test('i18n am format', function() {
   assert.equal(fecha.format(new Date(2018,4,2,10), 'YYYY-MM-DD HHA', {
     amPm: ['sd', 'gd'],
@@ -178,6 +177,8 @@ test('i18n am format', function() {
 test('no format', function() {
   assert.equal(fecha.format(new Date(2017,4,2,10)), 'Tue May 02 2017 10:00:00');
 });
+testFormat('date with leading zeros', new Date(999, 0, 1), 'YYYY/MM/DD', '0999/01/01');
+testFormat('date with leading zeros short', new Date(999, 0, 1), 'YY/MM/DD', '99/01/01');
 
 // Literals
 var date = new Date(2009, 1, 14, 15, 25, 50, 125);
@@ -189,7 +190,6 @@ testFormat('incomplete literal', date, '[YY', '[09');
 testFormat('literal inside literal', date, '[[YY]]', '[YY]');
 testFormat('bracket inside literal', date, '[[]', '[');
 testFormat('new lines', date, 'YYYY[\n]DD[\n]', '2009\n14\n');
-
 test('Invalid date', function () {
   assert.throws(function () {
     fecha.format('hello', 'YYYY');

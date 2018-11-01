@@ -18,15 +18,6 @@ export default [
       file: 'dist/fecha.min.js',
     }
   },
-  {
-    input: 'src/fecha.strict.js',
-    plugins: browserPlugins,
-    output: {
-      name: 'fecha',
-      format: 'umd',
-      file: 'dist/fecha.strict.min.js',
-    }
-  },
   // For Node: no minify, output in lib dir
   {
     input: 'src/fecha.js',
@@ -34,14 +25,6 @@ export default [
       name: 'fecha',
       format: 'umd',
       file: 'lib/fecha.umd.js',
-    }
-  },
-  {
-    input: 'src/fecha.strict.js',
-    output: {
-      name: 'fecha',
-      format: 'umd',
-      file: 'lib/fecha.strict.umd.js',
     }
   },
 ];

@@ -1,6 +1,6 @@
 {
   "name": "fecha",
-  "version": "2.3.3",
+  "version": "3.0.0",
   "description": "Date formatting and parsing",
   "main": "lib/fecha.umd.js",
   "module": "src/fecha.js",
@@ -36,9 +36,7 @@
   "files": [
     "fecha.js",
     "fecha.min.js",
-    "fecha.d.ts",
-    "fecha.strict.js",
-    "fecha.strict.min.js"
+    "fecha.d.ts"
   ],
   "types": "./fecha.d.ts"
 }

@@ -1,3 +1,7 @@
+### 3.0.0
+- Moved to ES modules
+- Changed invalid date from `false` to `null`
+
 ### 2.3.3
 Fixed bug with year 999 not having leading zero
 

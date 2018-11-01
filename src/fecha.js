@@ -4,13 +4,17 @@
  */
 var fecha = {};
 var token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
-var twoDigits = /\d\d?/;
-var threeDigits = /\d{3}/;
-var fourDigits = /\d{4}/;
-var word = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i;
+var twoDigits = '\\d\\d?';
+var threeDigits = '\\d{3}';
+var fourDigits = '\\d{4}';
+var word = '[^\\s]+';
 var literal = /\[([^]*?)\]/gm;
 var noop = function () {
 };
+
+function regexEscape(str) {
+  return str.replace( /[|\\{()[^$+*?.-]/g, '\\$&');
+}
 
 function shorten(arr, sLen) {
   var newArr = [];
@@ -88,7 +92,7 @@ var formatFlags = {
     return i18n.monthNames[dateObj.getMonth()];
   },
   YY: function(dateObj) {
-    return String(dateObj.getFullYear()).substr(2);
+    return pad(String(dateObj.getFullYear()), 4).substr(2);
   },
   YYYY: function(dateObj) {
     return pad(dateObj.getFullYear(), 4);
@@ -142,7 +146,7 @@ var parseFlags = {
   D: [twoDigits, function (d, v) {
     d.day = v;
   }],
-  Do: [new RegExp(twoDigits.source + word.source), function (d, v) {
+  Do: [twoDigits + word, function (d, v) {
     d.day = parseInt(v, 10);
   }],
   M: [twoDigits, function (d, v) {
@@ -164,10 +168,10 @@ var parseFlags = {
   YYYY: [fourDigits, function (d, v) {
     d.year = v;
   }],
-  S: [/\d/, function (d, v) {
+  S: ['\\d', function (d, v) {
     d.millisecond = v * 100;
   }],
-  SS: [/\d{2}/, function (d, v) {
+  SS: ['\\d{2}', function (d, v) {
     d.millisecond = v * 10;
   }],
   SSS: [threeDigits, function (d, v) {
@@ -185,8 +189,7 @@ var parseFlags = {
       d.isPm = true;
     }
   }],
-  ZZ: [/([\+\-]\d\d:?\d\d|Z)/, function (d, v) {
-    if (v === 'Z') v = '+00:00';
+  ZZ: ['[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z', function (d, v) {
     var parts = (v + '').match(/([\+\-]|\d\d)/gi), minutes;
 
     if (parts) {
@@ -272,31 +275,27 @@ fecha.parse = function (dateStr, format, i18nSettings) {
   // Avoid regular expression denial of service, fail early for really long strings
   // https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
   if (dateStr.length > 1000) {
-    return false;
+    return null;
   }
 
-  var isValid = true;
   var dateInfo = {};
-  format.replace(token, function ($0) {
+  var parseInfo = [];
+  var newFormat = regexEscape(format).replace(token, function ($0) {
     if (parseFlags[$0]) {
       var info = parseFlags[$0];
-      var index = dateStr.search(info[0]);
-      if (!~index) {
-        isValid = false;
-      } else {
-        dateStr.replace(info[0], function (result) {
-          info[1](dateInfo, result, i18n);
-          dateStr = dateStr.substr(index + result.length);
-          return result;
-        });
-      }
+      parseInfo.push(info[1]);
+      return '(' + info[0] + ')';
     }
 
-    return parseFlags[$0] ? '' : $0.slice(1, $0.length - 1);
+    return $0;
   });
+  var matches = dateStr.match(new RegExp(newFormat, 'i'));
+  if (!matches) {
+    return null;
+  }
 
-  if (!isValid) {
-    return false;
+  for (var i = 1; i < matches.length; i++) {
+    parseInfo[i - 1](dateInfo, matches[i], i18n);
   }
 
   var today = new Date();
