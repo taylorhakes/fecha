@@ -28,7 +28,7 @@
   "homepage": "https://github.com/taylorhakes/fecha",
   "devDependencies": {
     "eslint": "^2.4.0",
-    "nyc": "^5.6.0",
+    "nyc": "^13.1.0",
     "painless": "^0.9.1",
     "rollup": "^0.59.0",
     "rollup-plugin-uglify": "^3.0.0"
