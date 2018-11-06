@@ -36,12 +36,13 @@ export interface Masks {
     [myMask: string]: string;
 }
 
-export let masks: Masks;
+interface Fecha {
+    masks: Masks;
+    i18n: i18nSettings;
+    format(dateObj: Date | number, mask: string, i18nSettings?: i18nSettings): string;
+    parse(dateStr: string, format: string, i18nSettings?: i18nSettings): Date | boolean;
+}
 
-export let i18n: i18nSettings;
+declare const fechaObj: Fecha;
 
-export function format(dateObj: Date | number, mask: string, i18nSettings?: i18nSettings): string;
-
-export function parse(dateStr: string, format: string, i18nSettings?: i18nSettings): Date | boolean;
-
-export as namespace Fecha;
+export default fechaObj;
