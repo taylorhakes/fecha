@@ -190,7 +190,7 @@ var parseFlags = {
     }
   }],
   ZZ: ['[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z', function (d, v) {
-    var parts = (v + '').match(/([\+\-]|\d\d)/gi), minutes;
+    var parts = (v + '').match(/([+-]|\d\d)/gi), minutes;
 
     if (parts) {
       minutes = +(parts[1] * 60) + parseInt(parts[2], 10);
