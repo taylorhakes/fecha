@@ -38,5 +38,5 @@
     "fecha.min.js",
     "fecha.d.ts"
   ],
-  "types": "./fecha.d.ts"
+  "types": "./src/fecha.d.ts"
 }
