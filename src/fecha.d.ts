@@ -40,7 +40,7 @@ interface Fecha {
     masks: Masks;
     i18n: i18nSettings;
     format(dateObj: Date | number, mask: string, i18nSettings?: i18nSettings): string;
-    parse(dateStr: string, format: string, i18nSettings?: i18nSettings): Date | boolean;
+    parse(dateStr: string, format: string, i18nSettings?: i18nSettings): Date | null;
 }
 
 declare const fechaObj: Fecha;
