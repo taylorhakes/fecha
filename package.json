@@ -29,7 +29,7 @@
   "devDependencies": {
     "eslint": "^5.8.0",
     "nyc": "^13.1.0",
-    "painless": "^0.9.1",
+    "painless": "^0.9.7",
     "rollup": "^0.59.0",
     "rollup-plugin-uglify": "^3.0.0"
   },
