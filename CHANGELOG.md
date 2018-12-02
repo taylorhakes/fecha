@@ -1,3 +1,6 @@
+### 3.0.2
+- Fixed issue where src files are not included correctly in npm
+
 ### 3.0.0
 - Moved to ES modules
 - Changed invalid date from `false` to `null`
