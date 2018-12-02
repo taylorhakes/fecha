@@ -42,6 +42,6 @@ export let i18n: i18nSettings;
 
 export function format(dateObj: Date | number, mask: string, i18nSettings?: i18nSettings): string;
 
-export function parse(dateStr: string, format: string, i18nSettings?: i18nSettings): Date | boolean;
+export function parse(dateStr: string, format: string, i18nSettings?: i18nSettings): Date | null;
 
 export as namespace Fecha;

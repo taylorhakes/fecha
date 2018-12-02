@@ -1,6 +1,6 @@
 {
   "name": "fecha",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Date formatting and parsing",
   "main": "lib/fecha.umd.js",
   "module": "src/fecha.js",
@@ -34,9 +34,10 @@
     "rollup-plugin-uglify": "^3.0.0"
   },
   "files": [
-    "fecha.js",
-    "fecha.min.js",
-    "fecha.d.ts"
+    "src/fecha.js",
+    "src/fecha.d.ts",
+    "lib/fecha.umd.js",
+    "dist/fecha.min.js"
   ],
-  "types": "./fecha.d.ts"
+  "types": "src/fecha.d.ts"
 }
