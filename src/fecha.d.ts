@@ -36,6 +36,10 @@ export interface Masks {
     [myMask: string]: string;
 }
 
+export var i18n: i18nSettings;
+
+export var masks: Masks;
+
 export function format(dateObj: Date | number, mask: string, i18nSettings?: i18nSettings): string;
 
 export function parse(dateStr: string, format: string, i18nSettings?: i18nSettings): Date | null;
