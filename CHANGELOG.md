@@ -1,3 +1,5 @@
+### 3.0.3
+- Fixed bug when using brackets when parsing dates
 ### 3.0.2
 - Fixed issue where src files are not included correctly in npm
 
