@@ -244,14 +244,14 @@ fecha.format = function (dateObj, mask, i18nSettings) {
   // Make literals inactive by replacing them with ??
   mask = mask.replace(literal, function($0, $1) {
     literals.push($1);
-    return '??';
+    return '@@@';
   });
   // Apply formatting rules
   mask = mask.replace(token, function ($0) {
     return $0 in formatFlags ? formatFlags[$0](dateObj, i18n) : $0.slice(1, $0.length - 1);
   });
   // Inline literal values back into the formatted value
-  return mask.replace(/\?\?/g, function() {
+  return mask.replace(/@@@/g, function() {
     return literals.shift();
   });
 };
@@ -280,6 +280,11 @@ fecha.parse = function (dateStr, format, i18nSettings) {
 
   var dateInfo = {};
   var parseInfo = [];
+  var literals = [];
+  format = format.replace(literal, function($0, $1) {
+    literals.push($1);
+    return '@@@';
+  });
   var newFormat = regexEscape(format).replace(token, function ($0) {
     if (parseFlags[$0]) {
       var info = parseFlags[$0];
@@ -288,6 +293,9 @@ fecha.parse = function (dateStr, format, i18nSettings) {
     }
 
     return $0;
+  });
+  newFormat = newFormat.replace(/@@@/g, function() {
+    return literals.shift();
   });
   var matches = dateStr.match(new RegExp(newFormat, 'i'));
   if (!matches) {

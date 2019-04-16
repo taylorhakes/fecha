@@ -50,6 +50,7 @@ testParse('UTC timezone offset', '09:20:31 GMT-0000 (UTC)', 'HH:mm:ss ZZ', new D
 testParse('UTC timezone offset without explicit offset', '09:20:31Z', 'HH:mm:ssZZ', new Date(year, 0, 1, 9, 20, 31));
 testParse('UTC timezone offset without GMT', '09:20:31 -0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9, 20, 31)));
 testParse('invalid date', 'hello', 'HH:mm:ss ZZ', null);
+testParse('formatted date with brackets', '2019-04-12T15:53', 'YYYY-MM-DD[T]HH:mm', new Date(2019, 3, 12, 15, 53))
 test('i18n month short parse', function() {
   assert.equal(+fecha.parse('def 3rd, 2021', 'MMM Do, YYYY', {
     monthNamesShort: ['Adk', 'Def', 'Sdfs', 'Sdf', 'Sdh', 'Tre', 'Iis', 'Swd', 'Ews', 'Sdf', 'Qaas', 'Ier']
