@@ -217,7 +217,8 @@ fecha.masks = {
   fullDate: 'dddd, MMMM D, YYYY',
   shortTime: 'HH:mm',
   mediumTime: 'HH:mm:ss',
-  longTime: 'HH:mm:ss.SSS'
+  longTime: 'HH:mm:ss.SSS',
+  mySqlDateTime: 'YYYY-MM-DD HH:mm:ss'
 };
 
 /***
