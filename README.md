@@ -45,6 +45,10 @@ npm install fecha --save
 
 ## Use it
 
+#### Importing
+Import fecha where you need
+`import fecha from 'fecha'`
+
 #### Formatting
 `fecha.format` accepts a Date object (or timestamp) and a string format and returns a formatted string. See below for
 available format tokens.
