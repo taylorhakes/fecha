@@ -334,7 +334,7 @@ function validateDateInfo(dateInfo) {
   if(dateInfo.day && dateInfo.day < 1 || dateInfo.day > 32) {
     return false;
   }
-  if(dateInfo.month && dateInfo.month < 1 || dateInfo.month > 11) {
+  if(dateInfo.month != null && dateInfo.month < 0 || dateInfo.month > 11) {
     return false;
   }
   return true;
