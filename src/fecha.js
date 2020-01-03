@@ -275,7 +275,7 @@ fecha.info = function (dateStr, format, i18nSettings) {
   // Avoid regular expression denial of service, fail early for really long strings
   // https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
   if (dateStr.length > 1000) {
-    return false;
+    return null;
   }
 
   var dateInfo = {};
