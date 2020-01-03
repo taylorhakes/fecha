@@ -28,6 +28,8 @@ testParse('january parses correctly', '2016-01-12', 'YYYY-MM-DD', new Date(2016,
 testParse('13nth month results in invalid date', '2016-13-12', 'YYYY-MM-DD', null);
 testParse('december parses correctly', '2016-12-12', 'YYYY-MM-DD', new Date(2016, 11, 12));
 testParse('date out of range ', '2016-12-52', 'YYYY-MM-DD', null);
+testParse('zero date results in invalid date ', '2016-12-00', 'YYYY-MM-DD', null);
+testParse('first  day of the month ', '2016-12-01', 'YYYY-MM-DD', new Date(2016, 11, 01));
 
 // this test fails right now due to the implementation interpreting `2016-12-123` as `2016-12-12` with a trailing unused 3. Unsure  if this is intended..?
 //testParse('date out of range with too many digits', '2016-12-123', 'YYYY-MM-DD', null); 
