@@ -256,18 +256,18 @@ fecha.format = function (dateObj, mask, i18nSettings) {
   });
 };
 
-/**
- * Parse a date string into an object, changes - into /
- * @method parse
+/** 
+ * Retrieves info about a date string
+ * @method info
  * @param {string} dateStr Date string
  * @param {string} format Date parse format
- * @returns {Date|boolean}
+ * @returns {Object}
  */
-fecha.parse = function (dateStr, format, i18nSettings) {
+fecha.info = function (dateStr, format, i18nSettings) {
   var i18n = i18nSettings || fecha.i18n;
 
   if (typeof format !== 'string') {
-    throw new Error('Invalid format in fecha.parse');
+    throw new Error('Invalid format in fecha.info');
   }
 
   format = fecha.masks[format] || format;
@@ -275,7 +275,7 @@ fecha.parse = function (dateStr, format, i18nSettings) {
   // Avoid regular expression denial of service, fail early for really long strings
   // https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
   if (dateStr.length > 1000) {
-    return null;
+    return false;
   }
 
   var dateInfo = {};
@@ -306,14 +306,19 @@ fecha.parse = function (dateStr, format, i18nSettings) {
     parseInfo[i - 1](dateInfo, matches[i], i18n);
   }
 
-  var today = new Date();
+  
   if (dateInfo.isPm === true && dateInfo.hour != null && +dateInfo.hour !== 12) {
     dateInfo.hour = +dateInfo.hour + 12;
   } else if (dateInfo.isPm === false && +dateInfo.hour === 12) {
     dateInfo.hour = 0;
   }
 
+  return dateInfo;
+};
+
+function dateInfoToDate(dateInfo) {
   var date;
+  var today = new Date();
   if (dateInfo.timezoneOffset != null) {
     dateInfo.minute = +(dateInfo.minute || 0) - +dateInfo.timezoneOffset;
     date = new Date(Date.UTC(dateInfo.year || today.getFullYear(), dateInfo.month || 0, dateInfo.day || 1,
@@ -323,6 +328,61 @@ fecha.parse = function (dateStr, format, i18nSettings) {
       dateInfo.hour || 0, dateInfo.minute || 0, dateInfo.second || 0, dateInfo.millisecond || 0);
   }
   return date;
+}
+
+function validateDateInfo(info1, format, i18nSettings) {
+  try {
+    var info2 = fecha.info(fecha.format(dateInfoToDate(info1), format, i18nSettings), format, i18nSettings);
+    if (!info2) {
+      return false;
+    }
+
+    var valid = true;
+    Object.keys(info1).forEach(function (key) {
+      if (info1[key] !== info2[key]) {
+        valid = false;
+      }
+    });
+    if (valid) {
+      Object.keys(info2).forEach(function (key) {
+        if (info1[key] !== info2[key]) {
+          valid = false;
+        }
+      });
+    }
+    return valid;
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * Parse a date string into an object, changes - into /
+ * @method parse
+ * @param {string} dateStr Date string
+ * @param {string} format Date parse format
+ * @returns {Date|boolean}
+ */
+fecha.parse = function (dateStr, format, i18nSettings) {
+  var i18n = i18nSettings || fecha.i18n;
+
+  if (typeof format !== 'string') {
+    throw new Error('Invalid format in fecha.parse');
+  }
+
+  format = fecha.masks[format] || format;
+
+  var dateInfo = fecha.info(dateStr, format, i18n);
+
+  if (!dateInfo) {
+    return false;
+  }
+
+  if(validateDateInfo(dateInfo, format, i18n)) {
+    return dateInfoToDate(dateInfo);
+  } else {
+    return false;
+  }
 };
 
 export default fecha;
