@@ -330,30 +330,14 @@ function dateInfoToDate(dateInfo) {
   return date;
 }
 
-function validateDateInfo(info1, format, i18nSettings) {
-  try {
-    var info2 = fecha.info(fecha.format(dateInfoToDate(info1), format, i18nSettings), format, i18nSettings);
-    if (!info2) {
-      return false;
-    }
-
-    var valid = true;
-    Object.keys(info1).forEach(function (key) {
-      if (info1[key] !== info2[key]) {
-        valid = false;
-      }
-    });
-    if (valid) {
-      Object.keys(info2).forEach(function (key) {
-        if (info1[key] !== info2[key]) {
-          valid = false;
-        }
-      });
-    }
-    return valid;
-  } catch (e) {
+function validateDateInfo(dateInfo) {
+  if(dateInfo.day && dateInfo.day < 1 || dateInfo.day > 32) {
     return false;
   }
+  if(dateInfo.month && dateInfo.month < 1 || dateInfo.month > 11) {
+    return false;
+  }
+  return true;
 }
 
 /**

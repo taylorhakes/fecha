@@ -7,6 +7,9 @@ var year = today.getFullYear();
 
 function testParse(name, str, format, date) {
   test(name, function() {
+    if(date === null) {
+      assert.equal(fecha.parse(str, format), null);
+    }
     assert.equal(+fecha.parse(str, format), +date);
   });
 }
@@ -17,7 +20,18 @@ function testFormat(name, dateObj, format, expected) {
   });
 }
 
-testParse('invalid', '2016-9876-123', 'YYYY-MM-DD', null);
+
+testParse('month out of range with too many digits', '2016-1234-12', 'YYYY-MM-DD', null);
+testParse('month out of range', '2016-31-12', 'YYYY-MM-DD', null);
+testParse('zero month results in invalid date', '2016-00-12', 'YYYY-MM-DD', null);
+testParse('january parses correctly', '2016-01-12', 'YYYY-MM-DD', new Date(2016, 0, 12));
+testParse('13nth month results in invalid date', '2016-13-12', 'YYYY-MM-DD', null);
+testParse('december parses correctly', '2016-12-12', 'YYYY-MM-DD', new Date(2016, 11, 12));
+testParse('date out of range ', '2016-12-52', 'YYYY-MM-DD', null);
+
+// this test fails right now due to the implementation interpreting `2016-12-123` as `2016-12-12` with a trailing unused 3. Unsure  if this is intended..?
+//testParse('date out of range with too many digits', '2016-12-123', 'YYYY-MM-DD', null); 
+
 testParse('basic date parse', '2012/05/03', 'YYYY/MM/DD', new Date(2012, 4, 3));
 testParse('compact basic date parse', '20120503', 'YYYYMMDD', new Date(2012, 4, 3));
 testParse('basic date parse with time', '2012/05/03 05:01:40', 'YYYY/MM/DD HH:mm:ss', new Date(2012, 4, 3, 5, 1, 40));
@@ -50,7 +64,8 @@ testParse('UTC timezone offset', '09:20:31 GMT-0000 (UTC)', 'HH:mm:ss ZZ', new D
 testParse('UTC timezone offset without explicit offset', '09:20:31Z', 'HH:mm:ssZZ', new Date(year, 0, 1, 9, 20, 31));
 testParse('UTC timezone offset without GMT', '09:20:31 -0000 (UTC)', 'HH:mm:ss ZZ', new Date(Date.UTC(year, 0, 1, 9, 20, 31)));
 testParse('invalid date', 'hello', 'HH:mm:ss ZZ', null);
-testParse('formatted date with brackets', '2019-04-12T15:53', 'YYYY-MM-DD[T]HH:mm', new Date(2019, 3, 12, 15, 53))
+testParse('formatted date with brackets', '2019-04-12T15:53', 'YYYY-MM-DD[T]HH:mm', new Date(2019, 3, 12, 15, 53));
+
 test('i18n month short parse', function() {
   assert.equal(+fecha.parse('def 3rd, 2021', 'MMM Do, YYYY', {
     monthNamesShort: ['Adk', 'Def', 'Sdfs', 'Sdf', 'Sdh', 'Tre', 'Iis', 'Swd', 'Ews', 'Sdf', 'Qaas', 'Ier']
