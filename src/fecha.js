@@ -375,13 +375,13 @@ fecha.parse = function (dateStr, format, i18nSettings) {
   var dateInfo = fecha.info(dateStr, format, i18n);
 
   if (!dateInfo) {
-    return false;
+    return null;
   }
 
   if(validateDateInfo(dateInfo, format, i18n)) {
     return dateInfoToDate(dateInfo);
   } else {
-    return false;
+    return null;
   }
 };
 
