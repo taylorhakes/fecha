@@ -1,12 +1,13 @@
 {
   "name": "fecha",
-  "version": "3.0.3",
+  "version": "4.0.0-beta.0",
   "description": "Date formatting and parsing",
   "main": "lib/fecha.umd.js",
   "module": "src/fecha.js",
   "scripts": {
-    "test": "eslint src && nyc --cache --reporter=text painless test.*",
-    "build": "NODE_ENV=production rollup -c"
+    "test": "eslint src && nyc --cache --reporter=text node test.js",
+    "build": "NODE_ENV=production rollup -c",
+    "format": "prettier --write *.js src/*.js"
   },
   "repository": {
     "type": "git",
@@ -27,9 +28,16 @@
   },
   "homepage": "https://github.com/taylorhakes/fecha",
   "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/node": "^7.7.7",
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
+    "@babel/preset-env": "^7.7.7",
+    "@istanbuljs/nyc-config-babel": "^3.0.0",
+    "babel-plugin-istanbul": "^6.0.0",
     "eslint": "^5.8.0",
-    "nyc": "^13.1.0",
+    "nyc": "^15.0.0",
     "painless": "^0.9.7",
+    "prettier": "1.19.1",
     "rollup": "^0.59.0",
     "rollup-plugin-uglify": "^3.0.0"
   },

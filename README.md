@@ -51,18 +51,20 @@ available format tokens.
 
 Note: `fecha.format` will throw an error when passed invalid parameters
 ```js
-fecha.format(<Date Object>, <String Format>);
+import {formatDate} from 'fecha';
+
+format(<Date Object>, <String Format>);
 
 // Custom formats
-fecha.format(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'); // 'Friday November 20th, 2015'
-fecha.format(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A'); // '1998-06-03 03:23:10.350 PM'
+format(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'); // 'Friday November 20th, 2015'
+format(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A'); // '1998-06-03 03:23:10.350 PM'
 
 // Named masks
-fecha.format(new Date(2015, 10, 20), 'mediumDate'); // 'Nov 20, 2015'
-fecha.format(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '05:30'
+format(new Date(2015, 10, 20), 'mediumDate'); // 'Nov 20, 2015'
+format(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '05:30'
 
 // Literals
-fecha.format(new Date(2001, 2, 5, 6, 7, 2, 5), '[on] MM-DD-YYYY [at] HH:mm'); // 'on 03-05-2001 at 06:07'
+format(new Date(2001, 2, 5, 6, 7, 2, 5), '[on] MM-DD-YYYY [at] HH:mm'); // 'on 03-05-2001 at 06:07'
 ```
 
 #### Parsing
@@ -70,19 +72,39 @@ fecha.format(new Date(2001, 2, 5, 6, 7, 2, 5), '[on] MM-DD-YYYY [at] HH:mm'); //
 
 Note: `fecha.parse` will throw an error when passed invalid parameters
 ```js
+import {parseDate} from 'fecha';
+
 // Custom formats
-fecha.parse('February 3rd, 2014', 'MMMM Do, YYYY'); // new Date(2014, 1, 3)
-fecha.parse('10-12-10 14:11:12', 'YY-MM-DD HH:mm:ss'); // new Date(2010, 11, 10, 14, 11, 12)
+parseDate('February 3rd, 2014', 'MMMM Do, YYYY'); // new Date(2014, 1, 3)
+parseDate('10-12-10 14:11:12', 'YY-MM-DD HH:mm:ss'); // new Date(2010, 11, 10, 14, 11, 12)
 
 // Named masks
-fecha.parse('5/3/98', 'shortDate'); // new Date(1998, 4, 3)
-fecha.parse('November 4, 2005', 'longDate'); // new Date(2005, 10, 4)
+parseDate('5/3/98', 'shortDate'); // new Date(1998, 4, 3)
+parseDate('November 4, 2005', 'longDate'); // new Date(2005, 10, 4)
+
+// Override i18n
+parseDate('4 de octubre de 2005', 'M de MMMM de YYYY', {
+  monthNames: [
+    'enero',
+    'febrero',
+    'marzo',
+    'abril',
+    'mayo',
+    'junio',
+    'julio',
+    'agosto',
+    'septiembre',
+    'octubre',
+    'noviembre',
+    'diciembre'
+  ]
+});
 ```
 
 #### i18n Support
 ```js
-// Override fecha.i18n to support any language
-fecha.i18n = {
+// Default Global Settings
+{
 	dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'],
 	dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
 	monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -91,13 +113,30 @@ fecha.i18n = {
 	// D is the day of the month, function returns something like...  3rd or 11th
 	DoFn: function (D) {
 		return D + [ 'th', 'st', 'nd', 'rd' ][ D % 10 > 3 ? 0 : (D - D % 10 !== 10) * D % 10 ];
-    }
+  }
 }
+
+// Override global settings
+import {setGlobalDateI18n} from 'fecha';
+
+setGlobalDateI18n({
+  dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'],
+	dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+	monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+	monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+	amPm: ['am', 'pm'],
+	// D is the day of the month, function returns something like...  3rd or 11th
+	DoFn: function (D) {
+		return D + [ 'th', 'st', 'nd', 'rd' ][ D % 10 > 3 ? 0 : (D - D % 10 !== 10) * D % 10 ];
+  }
+});
+
 ```
 
 #### Custom Named Masks
 ```js
-fecha.masks = {
+// Default global masks
+{
 	default: 'ddd MMM DD YYYY HH:mm:ss',
 	shortDate: 'M/D/YY',
 	mediumDate: 'MMM D, YYYY',
@@ -106,10 +145,14 @@ fecha.masks = {
 	shortTime: 'HH:mm',
 	mediumTime: 'HH:mm:ss',
 	longTime: 'HH:mm:ss.SSS'
-};
+}
 
 // Create a new mask
-fecha.masks.myMask = 'HH:mm:ss YY/MM/DD';
+import {setGlobalDateMasks} from 'fecha';
+
+setGlobalDateMasks({
+  myMask: 'HH:mm:ss YY/MM/DD';
+});
 
 // Use it
 fecha.format(new Date(2014, 5, 6, 14, 10, 45), 'myMask'); // '14:10:45 14/06/06'
