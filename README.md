@@ -51,28 +51,30 @@ available format tokens.
 
 Note: `fecha.format` will throw an error when passed invalid parameters
 ```js
-import {formatDate} from 'fecha';
+import { formatDate } from 'fecha';
 
-format(<Date Object>, <String Format>);
+type formatDate = (date: Date, format?: string, i18n?: I18nSettings) => str;
 
 // Custom formats
-format(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'); // 'Friday November 20th, 2015'
-format(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A'); // '1998-06-03 03:23:10.350 PM'
+formatDate(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'); // 'Friday November 20th, 2015'
+formatDate(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A'); // '1998-06-03 03:23:10.350 PM'
 
 // Named masks
-format(new Date(2015, 10, 20), 'mediumDate'); // 'Nov 20, 2015'
-format(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '05:30'
+formatDate(new Date(2015, 10, 20), 'mediumDate'); // 'Nov 20, 2015'
+formatDate(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '05:30'
 
 // Literals
-format(new Date(2001, 2, 5, 6, 7, 2, 5), '[on] MM-DD-YYYY [at] HH:mm'); // 'on 03-05-2001 at 06:07'
+formatDate(new Date(2001, 2, 5, 6, 7, 2, 5), '[on] MM-DD-YYYY [at] HH:mm'); // 'on 03-05-2001 at 06:07'
 ```
 
 #### Parsing
-`fecha.parse` accepts a Date string and a string format and returns a Date object. See below for available format tokens.
+`parseDate` accepts a Date string and a string format and returns a Date object. See below for available format tokens. You MUST specify a format.
 
-Note: `fecha.parse` will throw an error when passed invalid parameters
+Note: `parseDate` will throw an error when passed invalid parameters
 ```js
-import {parseDate} from 'fecha';
+import { parseDate } from 'fecha';
+
+type parseDate = (dateStr: string, format: string, i18n?: I18nSettings) => Date|null;
 
 // Custom formats
 parseDate('February 3rd, 2014', 'MMMM Do, YYYY'); // new Date(2014, 1, 3)
@@ -148,14 +150,14 @@ setGlobalDateI18n({
 }
 
 // Create a new mask
-import {setGlobalDateMasks} from 'fecha';
+import { formatDate, setGlobalDateMasks } from 'fecha';
 
 setGlobalDateMasks({
   myMask: 'HH:mm:ss YY/MM/DD';
 });
 
 // Use it
-fecha.format(new Date(2014, 5, 6, 14, 10, 45), 'myMask'); // '14:10:45 14/06/06'
+formatDate(new Date(2014, 5, 6, 14, 10, 45), 'myMask'); // '14:10:45 14/06/06'
 ```
 
 ### Formatting Tokens

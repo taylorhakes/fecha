@@ -5,7 +5,7 @@
   "main": "lib/fecha.umd.js",
   "module": "src/fecha.js",
   "scripts": {
-    "test": "eslint src && nyc --cache --reporter=text node test.js",
+    "test": "prettier --check *.js src/*.js && eslint src && nyc --cache --reporter=text node test.js",
     "build": "NODE_ENV=production rollup -c",
     "format": "prettier --write *.js src/*.js"
   },
