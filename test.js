@@ -108,18 +108,8 @@ testParse(
   "Do MMM, YYYY",
   new Date(1995, 11, 13)
 );
-testParse(
-  "Long month",
-  "December",
-  "MMMM",
-  new Date(year, 11, 1)
-);
-testParse(
-  "Long month invalid",
-  "Decembr",
-  "MMMM",
-  null
-);
+testParse("Long month", "December", "MMMM", new Date(year, 11, 1));
+testParse("Long month invalid", "Decembr", "MMMM", null);
 testParse(
   "1st February, 1982",
   "1st February, 1982",
@@ -151,12 +141,7 @@ testParse(
   "YYYY-MM-DD hhA",
   new Date(2015, 10, 7, 22)
 );
-testParse(
-  "ampm imvalid",
-  "2015-11-07 10ZM",
-  "YYYY-MM-DD hhA",
-  null
-);
+testParse("ampm imvalid", "2015-11-07 10ZM", "YYYY-MM-DD hhA", null);
 testParse("ampm 9AM", "2015-11-07 9AM", "YYYY-MM-DD hhA", null);
 testParse(
   "ampm 12am",
@@ -337,12 +322,12 @@ test("no format specified", function() {
 });
 test("year format specified twice", function() {
   assert.throws(function() {
-    fecha.parseDate("2014-2015", 'YYYY-YYYY');
+    fecha.parseDate("2014-2015", "YYYY-YYYY");
   });
 });
 test("12 hour format without am/pm", function() {
   assert.throws(function() {
-    fecha.parseDate("09:24", 'hh:mm');
+    fecha.parseDate("09:24", "hh:mm");
   });
 });
 test("long input null", function() {

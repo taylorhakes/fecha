@@ -233,7 +233,7 @@ const formatDate = (
     return "@@@";
   });
   // Apply formatting rules
-  mask = mask.replace(token, ($0) => formatFlags[$0](dateObj, i18n));
+  mask = mask.replace(token, $0 => formatFlags[$0](dateObj, i18n));
   // Inline literal values back into the formatted value
   return mask.replace(/@@@/g, () => literals.shift());
 };
