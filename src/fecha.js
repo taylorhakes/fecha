@@ -10,38 +10,34 @@ const fourDigits = "\\d{4}";
 const word = "[^\\s]+";
 const literal = /\[([^]*?)\]/gm;
 
-function regexEscape(str) {
-  return str.replace(/[|\\{()[^$+*?.-]/g, "\\$&");
-}
+const regexEscape = str => str.replace(/[|\\{()[^$+*?.-]/g, "\\$&");
 
-function shorten(arr, sLen) {
+const shorten = (arr, sLen) => {
   var newArr = [];
   for (var i = 0, len = arr.length; i < len; i++) {
     newArr.push(arr[i].substr(0, sLen));
   }
   return newArr;
-}
+};
 
-function monthUpdate(arrName) {
-  return function(v, i18n) {
-    var index = i18n[arrName].indexOf(
-      v.charAt(0).toUpperCase() + v.substr(1).toLowerCase()
-    );
-    if (~index) {
-      return index;
-    }
-    return null;
-  };
-}
+const monthUpdate = arrName => (v, i18n) => {
+  var index = i18n[arrName].indexOf(
+    v.charAt(0).toUpperCase() + v.substr(1).toLowerCase()
+  );
+  if (~index) {
+    return index;
+  }
+  return null;
+};
 
-function pad(val, len) {
+const pad = (val, len) => {
   val = String(val);
   len = len || 2;
   while (val.length < len) {
     val = "0" + val;
   }
   return val;
-}
+};
 
 const dayNames = [
   "Sunday",
@@ -74,11 +70,13 @@ const globalI18n = {
   monthNamesShort,
   monthNames,
   amPm: ["am", "pm"],
-  DoFn: function DoFn(D) {
+  DoFn(dayOfMonth) {
     return (
-      D +
+      dayOfMonth +
       ["th", "st", "nd", "rd"][
-        D % 10 > 3 ? 0 : ((D - (D % 10) !== 10) * D) % 10
+        dayOfMonth % 10 > 3
+          ? 0
+          : ((dayOfMonth - (dayOfMonth % 10) !== 10) * dayOfMonth) % 10
       ]
     );
   }
@@ -134,7 +132,7 @@ var parseFlags = {
   YY: [
     "year",
     twoDigits,
-    function(v) {
+    v => {
       const now = new Date();
       const cent = +("" + now.getFullYear()).substr(0, 2);
       return "" + (v > 68 ? cent - 1 : cent) + v;
@@ -159,7 +157,7 @@ var parseFlags = {
   a: [
     "isPm",
     word,
-    function(v, i18n) {
+    (v, i18n) => {
       const val = v.toLowerCase();
       if (val === i18n.amPm[0]) {
         return false;
@@ -172,7 +170,7 @@ var parseFlags = {
   ZZ: [
     "timezoneOffset",
     "[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z?",
-    function(v) {
+    v => {
       const parts = (v + "").match(/([+-]|\d\d)/gi);
 
       if (parts) {
@@ -276,7 +274,7 @@ const parseDate = (dateStr, format, i18n = globalI18n) => {
   });
   const specifiedFields = {};
   const requiredFields = {};
-  newFormat = regexEscape(newFormat).replace(token, function($0) {
+  newFormat = regexEscape(newFormat).replace(token, $0 => {
     const info = parseFlags[$0];
     const [field, regex, , requiredField] = info;
 
@@ -302,9 +300,7 @@ const parseDate = (dateStr, format, i18n = globalI18n) => {
     }
   });
 
-  newFormat = newFormat.replace(/@@@/g, function() {
-    return literals.shift();
-  });
+  newFormat = newFormat.replace(/@@@/g, () => literals.shift());
   const matches = dateStr.match(new RegExp(newFormat, "i"));
   if (!matches) {
     return null;

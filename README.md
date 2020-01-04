@@ -113,8 +113,8 @@ parseDate('4 de octubre de 2005', 'M de MMMM de YYYY', {
 	monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 	amPm: ['am', 'pm'],
 	// D is the day of the month, function returns something like...  3rd or 11th
-	DoFn: function (D) {
-		return D + [ 'th', 'st', 'nd', 'rd' ][ D % 10 > 3 ? 0 : (D - D % 10 !== 10) * D % 10 ];
+	DoFn(dayOfMonth) {
+		return dayOfMonth + [ 'th', 'st', 'nd', 'rd' ][ dayOfMonth % 10 > 3 ? 0 : (dayOfMonth - dayOfMonth % 10 !== 10) * dayOfMonth % 10 ];
   }
 }
 
