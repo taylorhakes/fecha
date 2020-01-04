@@ -11,6 +11,13 @@ const word = "[^\\s]+";
 const literal = /\[([^]*?)\]/gm;
 
 const regexEscape = str => str.replace(/[|\\{()[^$+*?.-]/g, "\\$&");
+const assign = (initial, ...objs) => {
+  objs.forEach(obj => {
+    Object.keys(obj).forEach(key => {
+      initial[key] = obj[key];
+    });
+  });
+};
 
 const shorten = (arr, sLen) => {
   var newArr = [];
@@ -81,7 +88,7 @@ const globalI18n = {
     );
   }
 };
-const setGlobalDateI18n = i18n => Object.assign(globalI18n, i18n);
+const setGlobalDateI18n = i18n => assign(globalI18n, i18n);
 
 const formatFlags = {
   D: dateObj => dateObj.getDate(),
@@ -197,7 +204,7 @@ const globalMasks = {
   mediumTime: "HH:mm:ss",
   longTime: "HH:mm:ss.SSS"
 };
-const setGlobalDateMasks = masks => Object.assign(globalMasks, masks);
+const setGlobalDateMasks = masks => assign(globalMasks, masks);
 
 /***
  * Format a date

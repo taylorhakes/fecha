@@ -39,6 +39,7 @@
     "painless": "^0.9.7",
     "prettier": "1.19.1",
     "rollup": "^0.59.0",
+    "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-uglify": "^3.0.0"
   },
   "files": [

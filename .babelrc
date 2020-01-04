@@ -4,5 +4,5 @@
         "@babel/preset-env"
       ]
     ],
-    "plugins": ["@babel/plugin-proposal-optional-chaining", "istanbul"]
+    "plugins": ["@babel/plugin-proposal-optional-chaining"]
 }

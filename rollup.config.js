@@ -1,4 +1,5 @@
 import uglify from "rollup-plugin-uglify";
+import babel from "rollup-plugin-babel";
 
 const browserPlugins = [];
 if (process.env.NODE_ENV === "production") {
@@ -16,7 +17,8 @@ export default [
       name: "fecha",
       format: "umd",
       file: "dist/fecha.min.js"
-    }
+    },
+    plugins: [babel()]
   },
   // For Node: no minify, output in lib dir
   {
@@ -25,6 +27,7 @@ export default [
       name: "fecha",
       format: "umd",
       file: "lib/fecha.umd.js"
-    }
+    },
+    plugins: [babel()]
   }
 ];
