@@ -20,6 +20,7 @@ export declare function assign<A>(a: A): A;
 export declare function assign<A, B>(a: A, b: B): A & B;
 export declare function assign<A, B, C>(a: A, b: B, c: C): A & B & C;
 export declare function assign<A, B, C, D>(a: A, b: B, c: C, d: D): A & B & C & D;
+declare const defaultI18n: I18nSettings;
 declare const setGlobalDateI18n: (i18n: I18nSettingsOptional) => I18nSettings;
 declare const setGlobalDateMasks: (masks: {
     [key: string]: string;
@@ -43,4 +44,4 @@ declare const format: (dateObj: Date, mask?: string, i18n?: I18nSettingsOptional
  * @returns {Date|null} Returns Date object. Returns null what date string is invalid or doesn't match format
  */
 declare function parse(dateStr: string, format: string, i18n?: I18nSettingsOptional): Date | null;
-export { format, parse, setGlobalDateI18n, setGlobalDateMasks };
+export { format, parse, defaultI18n, setGlobalDateI18n, setGlobalDateMasks };

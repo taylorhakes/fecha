@@ -3,9 +3,10 @@
   "version": "4.0.0-beta.0",
   "description": "Date formatting and parsing",
   "main": "lib/fecha.umd.js",
-  "module": "src/fecha.js",
+  "module": "lib/fecha.js",
   "scripts": {
-    "test": "prettier --check *.js src/*.ts && eslint --ext .ts src && tsc && nyc --cache --reporter=text ts-node test.js",
+    "test-only": "ts-node test.js",
+    "test": "prettier --check *.js src/*.ts && eslint --ext .ts src && npm run build && nyc --cache --reporter=text ts-node test.js",
     "build": "NODE_ENV=production rollup -c --sourcemap && tsc",
     "format": "prettier --write *.js src/*.ts"
   },
@@ -46,10 +47,10 @@
     "typescript": "^3.7.4"
   },
   "files": [
-    "src/fecha.js",
-    "src/fecha.d.ts",
+    "lib/fecha.js",
+    "lib/fecha.d.ts",
     "lib/fecha.umd.js",
     "dist/fecha.min.js"
   ],
-  "types": "src/fecha.d.ts"
+  "types": "lib/fecha.d.ts"
 }

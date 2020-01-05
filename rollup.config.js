@@ -24,5 +24,14 @@ export default [
       file: "lib/fecha.umd.js"
     },
     plugins: [typescript(), sourceMaps()]
+  },
+  {
+    input: "src/fecha.ts",
+    output: {
+      name: "fecha",
+      format: "esm",
+      file: "lib/fecha.js"
+    },
+    plugins: [typescript(), sourceMaps()]
   }
 ];

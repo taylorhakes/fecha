@@ -1,7 +1,3 @@
-/**
- * Parse or format dates
- * @class fecha
- */
 const token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
 const twoDigitsOptional = "[1-9]\\d?";
 const twoDigits = "\\d\\d";
@@ -66,9 +62,8 @@ function shorten<T extends string[]>(arr: T, sLen: number): string[] {
 const monthUpdate = (
   arrName: "monthNames" | "monthNamesShort" | "dayNames" | "dayNamesShort"
 ) => (v: string, i18n: I18nSettings): number | null => {
-  const index = i18n[arrName].indexOf(
-    v.charAt(0).toUpperCase() + v.substr(1).toLowerCase()
-  );
+  const lowerCaseArr = i18n[arrName].map(v => v.toLowerCase());
+  const index = lowerCaseArr.indexOf(v.toLowerCase());
   if (index > -1) {
     return index;
   }
@@ -79,15 +74,14 @@ export function assign<A>(a: A): A;
 export function assign<A, B>(a: A, b: B): A & B;
 export function assign<A, B, C>(a: A, b: B, c: C): A & B & C;
 export function assign<A, B, C, D>(a: A, b: B, c: C, d: D): A & B & C & D;
-export function assign(...args: any[]): any {
-  const newObj = {};
+export function assign(origObj: any, ...args: any[]): any {
   for (const obj of args) {
     for (const key in obj) {
       // @ts-ignore ex
-      newObj[key] = obj[key];
+      origObj[key] = obj[key];
     }
   }
-  return newObj;
+  return origObj;
 }
 
 const dayNames: Days = [
@@ -117,7 +111,7 @@ const monthNames: Months = [
 const monthNamesShort: Months = shorten(monthNames, 3) as Months;
 const dayNamesShort: Days = shorten(dayNames, 3) as Days;
 
-const globalI18n: I18nSettings = {
+const defaultI18n: I18nSettings = {
   dayNamesShort,
   dayNames,
   monthNamesShort,
@@ -134,8 +128,9 @@ const globalI18n: I18nSettings = {
     );
   }
 };
+let globalI18n = assign({}, defaultI18n);
 const setGlobalDateI18n = (i18n: I18nSettingsOptional): I18nSettings =>
-  assign(globalI18n, i18n);
+  (globalI18n = assign(globalI18n, i18n));
 
 const regexEscape = (str: string): string =>
   str.replace(/[|\\{()[^$+*?.-]/g, "\\$&");
@@ -493,4 +488,4 @@ function parse(
     )
   );
 }
-export { format, parse, setGlobalDateI18n, setGlobalDateMasks };
+export { format, parse, defaultI18n, setGlobalDateI18n, setGlobalDateMasks };

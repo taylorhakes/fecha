@@ -1,5 +1,5 @@
 var painless = require("painless");
-var fecha = require("./src/fecha");
+var fecha = require("./lib/fecha.umd");
 var test = painless.createGroup();
 var assert = painless.assert;
 var today = new Date();
@@ -252,6 +252,28 @@ testParse(
   "xxxx YYYY-MM-DD xxxx",
   new Date(2000, 0, 1)
 );
+test.beforeEach(() => {
+  fecha.setGlobalDateI18n(fecha.defaultI18n);
+});
+test("test i18n settings override", function() {
+  fecha.setGlobalDateI18n({
+    monthNamesShort: [
+      "aaa",
+      "bbb",
+      "ccc",
+      "ddd",
+      "eee",
+      "fff",
+      "ggg",
+      "hhh",
+      "iii",
+      "jjj",
+      "kkk",
+      "lll"
+    ]
+  });
+  assert.equal(+fecha.parse("ddd 2120", "MMM YYYY"), +new Date(2120, 3, 1));
+});
 test("i18n month short parse", function() {
   assert.equal(
     +fecha.parse("Def 3rd, 2021", "MMM Do, YYYY", {
