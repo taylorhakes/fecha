@@ -5,9 +5,9 @@
   "main": "lib/fecha.umd.js",
   "module": "src/fecha.js",
   "scripts": {
-    "test": "prettier --check *.js src/*.js && eslint src && nyc --cache --reporter=text node test.js",
-    "build": "NODE_ENV=production rollup -c",
-    "format": "prettier --write *.js src/*.js"
+    "test": "prettier --check *.js src/*.ts && eslint --ext .ts src && tsc && nyc --cache --reporter=text ts-node test.js",
+    "build": "NODE_ENV=production rollup -c --sourcemap && tsc",
+    "format": "prettier --write *.js src/*.ts"
   },
   "repository": {
     "type": "git",
@@ -28,19 +28,22 @@
   },
   "homepage": "https://github.com/taylorhakes/fecha",
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/node": "^7.7.7",
-    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
-    "@babel/preset-env": "^7.7.7",
-    "@istanbuljs/nyc-config-babel": "^3.0.0",
-    "babel-plugin-istanbul": "^6.0.0",
-    "eslint": "^5.8.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.14.0",
+    "@typescript-eslint/parser": "^2.14.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
     "nyc": "^15.0.0",
     "painless": "^0.9.7",
     "prettier": "1.19.1",
     "rollup": "^0.59.0",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-uglify": "^3.0.0"
+    "rollup-plugin-sourcemaps": "^0.5.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-uglify": "^3.0.0",
+    "source-map-support": "^0.5.16",
+    "ts-node": "^8.5.4",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.4"
   },
   "files": [
     "src/fecha.js",

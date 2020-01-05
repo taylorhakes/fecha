@@ -3,26 +3,16 @@
 
 #### Improvements
 - *Valid date parsing* - By default fecha will check validity of dates. Previously `2019-55-01` or `2019-01-42` would parse correctly, since Javascript can handle it. Now invalid dates will return `null` instead
-- *ES Module and Tree Shaking Support* - You can now import fecha parseDate or formatDate independently
+- *ES Module and Tree Shaking Support* - You can now import fecha `parse` or `format` independently
+```js
+import {format, parse} from 'fecha';
+
+format(...);
+parse(...)
 
 
 #### Breaking changes
 - `parseDate` may return `null` when previously returned a `Date`. See improvements above, but invalid dates will return `null` now
-- Import and function name changes
-Previously
-```js
-import fecha from 'fecha';
-
-fecha.format(...)
-fecha.parse(...)
-```
-New
-```js
-import {formatDate, parseDate} from 'fecha';
-
-formatDate(...)
-parseDate(...)
-```
 - Change to how to set masks and i18n
 Previously
 ```js
@@ -34,16 +24,15 @@ fecha.masks.myMask = 'DD , MM, YYYY'
 
 New
 ```js
-import {parseDate, formatDate, setGlobalDateI18n, setGlobalDateMasks} from 'fecha';
+import {parse, format, setGlobalDateI18n, setGlobalDateMasks} from 'fecha';
 
 setGlobalDateI18n({
     // ...
 })
 setGlobalDateMasks({
-  myMask: 'DD , MM, YYYY' ;
+  myMask: 'DD , MM, YYYY'
 });
 ```
-
 
 ### 3.0.3
 - Fixed bug when using brackets when parsing dates

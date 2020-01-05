@@ -1,33 +1,28 @@
 import uglify from "rollup-plugin-uglify";
-import babel from "rollup-plugin-babel";
-
-const browserPlugins = [];
-if (process.env.NODE_ENV === "production") {
-  browserPlugins.push(uglify());
-}
+import typescript from "rollup-plugin-typescript";
+import sourceMaps from "rollup-plugin-sourcemaps";
 
 export default [
   // Compressed (for direct consumption in browser)
   // written to dist folder, minified.
   {
-    input: "src/fecha.js",
-    plugins: browserPlugins,
+    input: "src/fecha.ts",
     output: {
       // How it will be exposed on window
       name: "fecha",
       format: "umd",
       file: "dist/fecha.min.js"
     },
-    plugins: [babel()]
+    plugins: [typescript(), uglify(), sourceMaps()]
   },
   // For Node: no minify, output in lib dir
   {
-    input: "src/fecha.js",
+    input: "src/fecha.ts",
     output: {
       name: "fecha",
       format: "umd",
       file: "lib/fecha.umd.js"
     },
-    plugins: [babel()]
+    plugins: [typescript(), sourceMaps()]
   }
 ];

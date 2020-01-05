@@ -7,13 +7,13 @@ var year = today.getFullYear();
 
 function testParse(name, str, format, date) {
   test(name, function() {
-    assert.equal(+fecha.parseDate(str, format), +date);
+    assert.equal(+fecha.parse(str, format), +date);
   });
 }
 
 function testFormat(name, dateObj, format, expected) {
   test(name, function() {
-    assert.equal(fecha.formatDate(dateObj, format), expected);
+    assert.equal(fecha.format(dateObj, format), expected);
   });
 }
 testParse("leap date", "2020-02-29", "YYYY-MM-DD", new Date(2020, 1, 29));
@@ -254,7 +254,7 @@ testParse(
 );
 test("i18n month short parse", function() {
   assert.equal(
-    +fecha.parseDate("Def 3rd, 2021", "MMM Do, YYYY", {
+    +fecha.parse("Def 3rd, 2021", "MMM Do, YYYY", {
       monthNamesShort: [
         "Adk",
         "Def",
@@ -275,7 +275,7 @@ test("i18n month short parse", function() {
 });
 test("i18n month long parse", function() {
   assert.equal(
-    +fecha.parseDate("Defg 3rd, 2021", "MMMM Do, YYYY", {
+    +fecha.parse("Defg 3rd, 2021", "MMMM Do, YYYY", {
       monthNames: [
         "Adk",
         "Defg",
@@ -296,7 +296,7 @@ test("i18n month long parse", function() {
 });
 test("i18n pm parse", function() {
   assert.equal(
-    +fecha.parseDate("2018-05-02 10GD", "YYYY-MM-DD hhA", {
+    +fecha.parse("2018-05-02 10GD", "YYYY-MM-DD hhA", {
       amPm: ["sd", "gd"]
     }),
     +new Date(2018, 4, 2, 22)
@@ -304,7 +304,7 @@ test("i18n pm parse", function() {
 });
 test("i18n am parse", function() {
   assert.equal(
-    +fecha.parseDate("2018-05-02 10SD", "YYYY-MM-DD hhA", {
+    +fecha.parse("2018-05-02 10SD", "YYYY-MM-DD hhA", {
       amPm: ["sd", "gd"]
     }),
     +new Date(2018, 4, 2, 10)
@@ -312,22 +312,22 @@ test("i18n am parse", function() {
 });
 test("invalid date no format", function() {
   assert.throws(function() {
-    fecha.parseDate("hello");
+    fecha.parse("hello");
   });
 });
 test("no format specified", function() {
   assert.throws(function() {
-    fecha.parseDate("2014-11-05", false);
+    fecha.parse("2014-11-05", false);
   });
 });
 test("year format specified twice", function() {
   assert.throws(function() {
-    fecha.parseDate("2014-2015", "YYYY-YYYY");
+    fecha.parse("2014-2015", "YYYY-YYYY");
   });
 });
 test("12 hour format without am/pm", function() {
   assert.throws(function() {
-    fecha.parseDate("09:24", "hh:mm");
+    fecha.parse("09:24", "hh:mm");
   });
 });
 test("long input null", function() {
@@ -335,7 +335,7 @@ test("long input null", function() {
   for (var i = 0; i < 1002; i++) {
     input += "1";
   }
-  assert.equal(fecha.parseDate(input, "HH"), null);
+  assert.equal(fecha.parse(input, "HH"), null);
 });
 
 // // Day of the month
@@ -417,7 +417,7 @@ testFormat("rd", new Date(2001, 2, 23), "Do", "23rd");
 
 // Timezone offset
 test("timezone offset", function() {
-  assert(fecha.formatDate(new Date(2001, 2, 11), "ZZ").match(/^[\+\-]\d{4}$/));
+  assert(fecha.format(new Date(2001, 2, 11), "ZZ").match(/^[\+\-]\d{4}$/));
 });
 
 // Random groupings
@@ -457,12 +457,12 @@ testFormat(
   "number date",
   1325376000000,
   "YYY-MM-DD HH:mm:ss",
-  fecha.formatDate(new Date(Date.UTC(2012, 0, 1)), "YYY-MM-DD HH:mm:ss")
+  fecha.format(new Date(Date.UTC(2012, 0, 1)), "YYY-MM-DD HH:mm:ss")
 );
 testFormat("compact date format", new Date(2012, 4, 3), "YYYYMMDD", "20120503");
 test("i18n am format", function() {
   assert.equal(
-    fecha.formatDate(new Date(2018, 4, 2, 10), "YYYY-MM-DD HHA", {
+    fecha.format(new Date(2018, 4, 2, 10), "YYYY-MM-DD HHA", {
       amPm: ["sd", "gd"],
       DoFn: function() {}
     }),
@@ -471,7 +471,7 @@ test("i18n am format", function() {
 });
 test("no format", function() {
   assert.equal(
-    fecha.formatDate(new Date(2017, 4, 2, 10)),
+    fecha.format(new Date(2017, 4, 2, 10)),
     "Tue May 02 2017 10:00:00"
   );
 });
@@ -511,16 +511,16 @@ testFormat("bracket inside literal", date, "[[]", "[");
 testFormat("new lines", date, "YYYY[\n]DD[\n]", "2009\n14\n");
 test("Invalid date", function() {
   assert.throws(function() {
-    fecha.formatDate("hello", "YYYY");
+    fecha.format("hello", "YYYY");
   });
 });
 test("Invalid date number", function() {
   assert.throws(function() {
-    fecha.formatDate(89237983724982374, "YYYY");
+    fecha.format(89237983724982374, "YYYY");
   });
 });
 test("string date", function() {
   assert.throws(function() {
-    fecha.formatDate("2011-10-01", "MM-DD-YYYY");
+    fecha.format("2011-10-01", "MM-DD-YYYY");
   });
 });
