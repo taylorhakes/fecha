@@ -2,7 +2,7 @@
     "compilerOptions": {
         "module": "commonjs",
         "noImplicitAny": true,
-        "sourceMap": true,
+        "sourceMap": false,
         "declaration": true,
         "declarationDir": "lib",
         "outDir": "ts-out/"

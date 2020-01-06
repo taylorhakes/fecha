@@ -44,4 +44,16 @@ declare const format: (dateObj: Date, mask?: string, i18n?: I18nSettingsOptional
  * @returns {Date|null} Returns Date object. Returns null what date string is invalid or doesn't match format
  */
 declare function parse(dateStr: string, format: string, i18n?: I18nSettingsOptional): Date | null;
+declare const _default: {
+    format: (dateObj: Date, mask?: string, i18n?: I18nSettingsOptional) => string;
+    parse: typeof parse;
+    defaultI18n: I18nSettings;
+    setGlobalDateI18n: (i18n: I18nSettingsOptional) => I18nSettings;
+    setGlobalDateMasks: (masks: {
+        [key: string]: string;
+    }) => {
+        [key: string]: string;
+    };
+};
+export default _default;
 export { format, parse, defaultI18n, setGlobalDateI18n, setGlobalDateMasks };

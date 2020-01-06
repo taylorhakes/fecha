@@ -11,7 +11,8 @@ export default [
       // How it will be exposed on window
       name: "fecha",
       format: "umd",
-      file: "dist/fecha.min.js"
+      file: "dist/fecha.min.js",
+      exports: "named"
     },
     plugins: [typescript(), uglify(), sourceMaps()]
   },
@@ -21,17 +22,19 @@ export default [
     output: {
       name: "fecha",
       format: "umd",
-      file: "lib/fecha.umd.js"
+      file: "lib/fecha.umd.js",
+      exports: "named"
     },
-    plugins: [typescript(), sourceMaps()]
+    plugins: [typescript()]
   },
   {
     input: "src/fecha.ts",
     output: {
       name: "fecha",
       format: "esm",
-      file: "lib/fecha.js"
+      file: "lib/fecha.js",
+      exports: "named"
     },
-    plugins: [typescript(), sourceMaps()]
+    plugins: [typescript()]
   }
 ];

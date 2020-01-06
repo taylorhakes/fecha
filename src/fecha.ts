@@ -488,4 +488,11 @@ function parse(
     )
   );
 }
+export default {
+  format,
+  parse,
+  defaultI18n,
+  setGlobalDateI18n,
+  setGlobalDateMasks
+};
 export { format, parse, defaultI18n, setGlobalDateI18n, setGlobalDateMasks };
