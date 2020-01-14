@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "sourceMap": false,
+        "declaration": true,
+        "declarationDir": "lib",
+        "outDir": "ts-out/"
+    },
+    "include": [
+        "src/**/*"
+    ],
+}
