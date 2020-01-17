@@ -1,4 +1,4 @@
-## 4.0.0-alpha.0
+## 4.0.0
 ** Major Features and  Breaking changes in this version**
 
 #### Improvements
