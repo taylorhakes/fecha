@@ -104,8 +104,11 @@ parse('4 de octubre de 1983', 'M de MMMM de YYYY', {
 ```
 
 #### i18n Support
-```
-// Default Global Settings
+```js
+import {setGlobalDateI18n} from 'fecha';
+
+/*
+Default I18n Settings
 {
   dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'],
   dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -117,9 +120,7 @@ parse('4 de octubre de 1983', 'M de MMMM de YYYY', {
     return dayOfMonth + [ 'th', 'st', 'nd', 'rd' ][ dayOfMonth % 10 > 3 ? 0 : (dayOfMonth - dayOfMonth % 10 !== 10) * dayOfMonth % 10 ];
   }
 }
-
-// Override global settings
-import {setGlobalDateI18n} from 'fecha';
+*/
 
 setGlobalDateI18n({
   dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'],
@@ -137,7 +138,9 @@ setGlobalDateI18n({
 
 #### Custom Named Masks
 ```js
-// Default global masks
+import { format, setGlobalDateMasks } from 'fecha';
+/*
+Default global masks
 {
   default: 'ddd MMM DD YYYY HH:mm:ss',
   shortDate: 'M/D/YY',
@@ -148,10 +151,9 @@ setGlobalDateI18n({
   mediumTime: 'HH:mm:ss',
   longTime: 'HH:mm:ss.SSS'
 }
+*/
 
 // Create a new mask
-import { format, setGlobalDateMasks } from 'fecha';
-
 setGlobalDateMasks({
   myMask: 'HH:mm:ss YY/MM/DD';
 });
