@@ -85,7 +85,7 @@ parse('5/3/98', 'shortDate'); // new Date(1998, 4, 3)
 parse('November 4, 2005', 'longDate'); // new Date(2005, 10, 4)
 
 // Override i18n
-parse('4 de octubre de 2005', 'M de MMMM de YYYY', {
+parse('4 de octubre de 1983', 'M de MMMM de YYYY', {
   monthNames: [
     'enero',
     'febrero',
@@ -100,7 +100,7 @@ parse('4 de octubre de 2005', 'M de MMMM de YYYY', {
     'noviembre',
     'diciembre'
   ]
-});
+}); // new Date(1983, 9, 4)
 ```
 
 #### i18n Support
