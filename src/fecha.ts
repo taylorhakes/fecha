@@ -27,14 +27,8 @@ export type I18nSettings = {
   DoFn(dayOfMonth: number): string;
 };
 
-export type I18nSettingsOptional = {
-  amPm?: [string, string];
-  dayNames?: Days;
-  dayNamesShort?: Days;
-  monthNames?: Months;
-  monthNamesShort?: Months;
-  DoFn?(dayOfMonth: number): string;
-};
+export type I18nSettingsOptional = Partial<I18nSettings>;
+
 export type Days = [string, string, string, string, string, string, string];
 export type Months = [
   string,
