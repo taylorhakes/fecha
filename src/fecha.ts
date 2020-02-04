@@ -1,4 +1,4 @@
-const token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
+const token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|Z|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
 const twoDigitsOptional = "[1-9]\\d?";
 const twoDigits = "\\d\\d";
 const threeDigits = "\\d{3}";
@@ -185,6 +185,15 @@ const formatFlags: Record<
       (offset > 0 ? "-" : "+") +
       pad(Math.floor(Math.abs(offset) / 60) * 100 + (Math.abs(offset) % 60), 4)
     );
+  },
+  Z(dateObj: Date): string {
+    const offset = dateObj.getTimezoneOffset();
+    return (
+      (offset > 0 ? "-" : "+") +
+      pad(Math.floor(Math.abs(offset) / 60), 2) +
+      ":" +
+      pad(Math.abs(offset) % 60, 2)
+    );
   }
 };
 
@@ -208,6 +217,20 @@ const amPm: ParseInfo = [
       return 1;
     }
     return null;
+  }
+];
+const timezoneOffset: ParseInfo = [
+  "timezoneOffset",
+  "[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z?",
+  (v: string): number | null => {
+    const parts = (v + "").match(/([+-]|\d\d)/gi);
+
+    if (parts) {
+      const minutes = +parts[1] * 60 + parseInt(parts[2], 10);
+      return parts[0] === "+" ? minutes : -minutes;
+    }
+
+    return 0;
   }
 ];
 const parseFlags: Record<string, ParseInfo> = {
@@ -245,20 +268,8 @@ const parseFlags: Record<string, ParseInfo> = {
   MMMM: ["month", word, monthUpdate("monthNames")],
   a: amPm,
   A: amPm,
-  ZZ: [
-    "timezoneOffset",
-    "[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z?",
-    (v: string): number | null => {
-      const parts = (v + "").match(/([+-]|\d\d)/gi);
-
-      if (parts) {
-        const minutes = +parts[1] * 60 + parseInt(parts[2], 10);
-        return parts[0] === "+" ? minutes : -minutes;
-      }
-
-      return 0;
-    }
-  ]
+  ZZ: timezoneOffset,
+  Z: timezoneOffset
 };
 
 // Some common format strings
