@@ -210,6 +210,18 @@ testParse(
   new Date(Date.UTC(year, 0, 1, 14, 20, 31))
 );
 testParse(
+  "timezone offset with colon",
+  "09:20:31 GMT-05:00 (EST)",
+  "HH:mm:ss [GMT]ZZ [(EST)]",
+  new Date(Date.UTC(year, 0, 1, 14, 20, 31))
+);
+testParse(
+  "timezone offset with Z",
+  "09:20:31 GMT-05:00 (EST)",
+  "HH:mm:ss [GMT]Z [(EST)]",
+  new Date(Date.UTC(year, 0, 1, 14, 20, 31))
+);
+testParse(
   "timezone offset positive",
   "09:20:31 GMT+0611",
   "HH:mm:ss [GMT]ZZ",
@@ -231,6 +243,12 @@ testParse(
   "UTC timezone offset without explicit offset",
   "09:20:31Z",
   "HH:mm:ssZZ",
+  new Date(Date.UTC(year, 0, 1, 9, 20, 31))
+);
+testParse(
+  "UTC timezone offset without explicit offset with Z",
+  "09:20:31Z",
+  "HH:mm:ssZ",
   new Date(Date.UTC(year, 0, 1, 9, 20, 31))
 );
 testParse(
@@ -440,6 +458,9 @@ testFormat("rd", new Date(2001, 2, 23), "Do", "23rd");
 // Timezone offset
 test("timezone offset", function() {
   assert(fecha.format(new Date(2001, 2, 11), "ZZ").match(/^[\+\-]\d{4}$/));
+});
+test("timezone offset with colon", function() {
+  assert(fecha.format(new Date(2001, 2, 11), "Z").match(/^[\+\-]\d{2}:\d{2}$/));
 });
 
 // Random groupings
