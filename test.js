@@ -16,6 +16,12 @@ function testFormat(name, dateObj, format, expected) {
     assert.equal(fecha.format(dateObj, format), expected);
   });
 }
+testParse(
+  "Lima Peru timezone issue",
+  "1990-01-01",
+  "YYYY-MM-DD",
+  new Date(1990, 0, 1)
+);
 testParse("leap date", "2020-02-29", "YYYY-MM-DD", new Date(2020, 1, 29));
 testParse("leap date wrong year", "2019-02-29", "YYYY-MM-DD", null);
 testParse(

@@ -471,6 +471,7 @@ function parse(
     // Check to make sure the date field is within the allowed range. Javascript dates allows values
     // outside the allowed range. If the values don't match the value was invalid
     if (
+      specifiedFields[validateFields[i][0]] &&
       dateInfo[validateFields[i][0]] !== dateWithoutTZ[validateFields[i][1]]()
     ) {
       return null;
