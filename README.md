@@ -296,14 +296,14 @@ format(new Date(2014, 5, 6, 14, 10, 45), 'myMask'); // '14:10:45 14/06/06'
       <td>0 1 ... 998 999</td>
     </tr>
     <tr>
-      <td><b>Timezone with colon</b></td>
-      <td>ZZ</td>
+      <td><b>Timezone</b></td>
+      <td>Z</td>
       <td>
         -07:00 -06:00 ... +06:00 +07:00
       </td>
     </tr>
     <tr>
-      <td><b>Timezone without colon</b></td>
+      <td><b></b></td>
       <td>ZZ</td>
       <td>
         -0700 -0600 ... +0600 +0700
