@@ -4,7 +4,7 @@ Added Z format/parse and fixed Peru timezone issue
 - Fixed a strange issue when Peru changed timezones in 1990. See #78 
 
 ## 4.0.0
-** Major Features and  Breaking changes in this version**
+**Major Features and  Breaking changes in this version**
 
 #### Improvements
 - *Valid date parsing* - By default fecha will check validity of dates. Previously `2019-55-01` or `2019-01-42` would parse correctly, since Javascript can handle it. Now invalid dates will return `null` instead
