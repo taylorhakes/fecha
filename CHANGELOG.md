@@ -1,3 +1,8 @@
+### 4.1.0
+Added Z format/parse and fixed Peru timezone issue
+- Added `Z` format token. See readme for more info. Big thanks to @fer22f for writing the code.
+- Fixed a strange issue when Peru changed timezones in 1990. See #78 
+
 ## 4.0.0
 ** Major Features and  Breaking changes in this version**
 
