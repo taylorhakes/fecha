@@ -276,6 +276,33 @@ testParse(
   "xxxx YYYY-MM-DD xxxx",
   new Date(2000, 0, 1)
 );
+testParse(
+  "test parse isoDate format",
+  "1996-02-09",
+  "isoDate",
+  new Date(1996, 1, 9)
+);
+testParse(
+  "test parse isoDateTime format",
+  "1998-04-08T03:02:07+12:30",
+  "isoDateTime",
+  new Date(Date.UTC(1998, 3, 7, 14, 32, 7))
+);
+
+testParse(
+  "test parse isoDateTime mask",
+  "1998-04-08T03:02:07+12:30",
+  "isoDateTime",
+  new Date(Date.UTC(1998, 3, 7, 14, 32, 7))
+);
+
+testParse(
+  "test format then parse isoDateTime mask",
+  fecha.format(new Date(Date.UTC(1998, 3, 7, 14, 32, 7)), "isoDateTime"),
+  "isoDateTime",
+  new Date(Date.UTC(1998, 3, 7, 14, 32, 7))
+);
+
 test.beforeEach(() => {
   fecha.setGlobalDateI18n(fecha.defaultI18n);
 });

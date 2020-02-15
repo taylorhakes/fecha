@@ -1,3 +1,6 @@
+### 4.2.0
+Added isoDate and isoDateTime masks
+
 ### 4.1.0
 Added Z format/parse and fixed Peru timezone issue
 - Added `Z` format token. See readme for more info. Big thanks to @fer22f for writing the code.

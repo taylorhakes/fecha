@@ -60,7 +60,9 @@ format(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'); // 'Friday November 20th, 
 format(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A'); // '1998-06-03 03:23:10.350 PM'
 
 // Named masks
+format(new Date(2015, 10, 20), 'isoDate'); // '2015-11-20'
 format(new Date(2015, 10, 20), 'mediumDate'); // 'Nov 20, 2015'
+format(new Date(2015, 10, 20, 3, 2, 1), 'isoDateTime'); // '2015-11-20T03:02:01-05:00'
 format(new Date(2015, 2, 10, 5, 30, 20), 'shortTime'); // '05:30'
 
 // Literals
@@ -83,6 +85,7 @@ parse('10-12-10 14:11:12', 'YY-MM-DD HH:mm:ss'); // new Date(2010, 11, 10, 14, 1
 // Named masks
 parse('5/3/98', 'shortDate'); // new Date(1998, 4, 3)
 parse('November 4, 2005', 'longDate'); // new Date(2005, 10, 4)
+parse('2015-11-20T03:02:01-05:00', 'isoDateTime'); // new Date(2015, 10, 20, 3, 2, 1)
 
 // Override i18n
 parse('4 de octubre de 1983', 'M de MMMM de YYYY', {

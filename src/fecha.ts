@@ -279,6 +279,8 @@ const globalMasks: { [key: string]: string } = {
   mediumDate: "MMM D, YYYY",
   longDate: "MMMM D, YYYY",
   fullDate: "dddd, MMMM D, YYYY",
+  isoDate: "YYYY-MM-DD",
+  isoDateTime: "YYYY-MM-DDTHH:mm:ssZ",
   shortTime: "HH:mm",
   mediumTime: "HH:mm:ss",
   longTime: "HH:mm:ss.SSS"
