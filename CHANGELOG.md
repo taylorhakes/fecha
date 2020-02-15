@@ -14,7 +14,7 @@ import {format, parse} from 'fecha';
 
 format(...);
 parse(...)
-
+```
 
 #### Breaking changes
 - `parseDate` may return `null` when previously returned a `Date`. See improvements above, but invalid dates will return `null` now
