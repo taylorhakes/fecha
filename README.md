@@ -6,6 +6,10 @@ Lightweight date formatting and parsing (~2KB). Meant to replace parsing and for
 ```
 npm install fecha --save
 ```
+### Yarn
+```
+yarn add fecha
+```
 
 ### Fecha vs Moment
 <table class="table table-striped table-bordered">
