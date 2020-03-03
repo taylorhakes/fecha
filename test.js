@@ -529,6 +529,13 @@ testFormat(
 );
 testFormat("current date", new Date(), "YYYY", "" + new Date().getFullYear());
 testFormat("mask", new Date(1999, 0, 2), "mediumDate", "Jan 2, 1999");
+testFormat("mask isoDate", new Date(1999, 0, 2), "isoDate", "1999-01-02");
+testFormat(
+  "mask isoDateTime",
+  new Date(1999, 0, 2, 5, 7, 9),
+  "isoDateTime",
+  "1999-01-02T05:07:09-05:00"
+);
 testFormat(
   "number date",
   1325376000000,
