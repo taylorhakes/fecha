@@ -534,7 +534,7 @@ testFormat(
   "mask isoDateTime",
   new Date(1999, 0, 2, 5, 7, 9),
   "isoDateTime",
-  "1999-01-02T05:07:09-05:00"
+  "1999-01-02T05:07:09+00:00"
 );
 testFormat(
   "number date",
