@@ -50,7 +50,8 @@
     "lib/fecha.js",
     "lib/fecha.d.ts",
     "lib/fecha.umd.js",
-    "dist/fecha.min.js"
+    "dist/fecha.min.js",
+    "dist/fecha.min.js.map"
   ],
   "types": "lib/fecha.d.ts"
 }
