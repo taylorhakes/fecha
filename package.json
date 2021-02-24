@@ -47,11 +47,9 @@
     "typescript": "^3.7.4"
   },
   "files": [
-    "lib/fecha.js",
-    "lib/fecha.d.ts",
-    "lib/fecha.umd.js",
-    "dist/fecha.min.js",
-    "dist/fecha.min.js.map"
+    "lib",
+    "dist",
+    "src"
   ],
   "types": "lib/fecha.d.ts"
 }
