@@ -1,3 +1,7 @@
+### 4.2.1
+- Fixed missing source map
+- Fixed security y18n
+
 ### 4.2.0
 Added isoDate and isoDateTime masks
 

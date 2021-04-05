@@ -14,7 +14,7 @@ export declare function assign<A, B>(a: A, b: B): A & B;
 export declare function assign<A, B, C>(a: A, b: B, c: C): A & B & C;
 export declare function assign<A, B, C, D>(a: A, b: B, c: C, d: D): A & B & C & D;
 declare const defaultI18n: I18nSettings;
-declare const setGlobalDateI18n: (i18n: Partial<I18nSettings>) => I18nSettings;
+declare const setGlobalDateI18n: (i18n: I18nSettingsOptional) => I18nSettings;
 declare const setGlobalDateMasks: (masks: {
     [key: string]: string;
 }) => {
@@ -27,7 +27,7 @@ declare const setGlobalDateMasks: (masks: {
  * @param {string} mask Format of the date, i.e. 'mm-dd-yy' or 'shortDate'
  * @returns {string} Formatted date string
  */
-declare const format: (dateObj: Date, mask?: string, i18n?: Partial<I18nSettings>) => string;
+declare const format: (dateObj: Date, mask?: string, i18n?: I18nSettingsOptional) => string;
 /**
  * Parse a date string into a Javascript Date object /
  * @method parse
