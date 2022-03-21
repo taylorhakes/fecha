@@ -48,7 +48,7 @@ export type Months = [
 function shorten<T extends string[]>(arr: T, sLen: number): string[] {
   const newArr: string[] = [];
   for (let i = 0, len = arr.length; i < len; i++) {
-    newArr.push(arr[i].substr(0, sLen));
+    newArr.push(arr[i].slice(0, sLen));
   }
   return newArr;
 }
@@ -158,7 +158,7 @@ const formatFlags: Record<
   MMMM: (dateObj: Date, i18n: I18nSettings): string =>
     i18n.monthNames[dateObj.getMonth()],
   YY: (dateObj: Date): string =>
-    pad(String(dateObj.getFullYear()), 4).substr(2),
+    pad(String(dateObj.getFullYear()), 4).slice(2),
   YYYY: (dateObj: Date): string => pad(dateObj.getFullYear(), 4),
   h: (dateObj: Date): string => String(dateObj.getHours() % 12 || 12),
   hh: (dateObj: Date): string => pad(dateObj.getHours() % 12 || 12),
@@ -244,7 +244,7 @@ const parseFlags: Record<string, ParseInfo> = {
     twoDigits,
     (v: string): number => {
       const now = new Date();
-      const cent = +("" + now.getFullYear()).substr(0, 2);
+      const cent = +("" + now.getFullYear()).slice(0, 2);
       return +("" + (+v > 68 ? cent - 1 : cent) + v);
     }
   ],
