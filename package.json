@@ -1,6 +1,6 @@
 {
   "name": "fecha",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Date formatting and parsing",
   "main": "lib/fecha.umd.js",
   "module": "lib/fecha.js",

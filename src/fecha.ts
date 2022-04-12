@@ -1,5 +1,5 @@
 const token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|Z|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
-const twoDigitsOptional = "[1-9]\\d?";
+const twoDigitsOptional = "\\d\\d?";
 const twoDigits = "\\d\\d";
 const threeDigits = "\\d{3}";
 const fourDigits = "\\d{4}";

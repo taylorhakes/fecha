@@ -210,6 +210,12 @@ testParse(
   new Date(year, 0, 1, 10, 20, 30, 100)
 );
 testParse(
+  "hours short with 0",
+  "0:20:30",
+  "H:mm:ss",
+  new Date(year, 0, 1, 0, 20, 30)
+);
+testParse(
   "timezone offset",
   "09:20:31 GMT-0500 (EST)",
   "HH:mm:ss [GMT]ZZ [(EST)]",
@@ -257,6 +263,7 @@ testParse(
   "HH:mm:ssZ",
   new Date(Date.UTC(year, 0, 1, 9, 20, 31))
 );
+
 testParse(
   "UTC timezone offset without GMT",
   "09:20:31 -0000 (UTC)",
