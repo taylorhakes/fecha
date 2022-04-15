@@ -22,8 +22,17 @@ testParse(
   "YYYY-MM-DD",
   new Date(1990, 0, 1)
 );
-testParse("leap date", "2020-02-29", "YYYY-MM-DD", new Date(2020, 1, 29));
-testParse("leap date wrong year", "2019-02-29", "YYYY-MM-DD", null);
+testParse("leap year date", "2020-02-29", "YYYY-MM-DD", new Date(2020, 1, 29));
+// This is invalid because it's in the current timezone and can be validated
+testParse("29 on non leap year", "2019-02-29", "YYYY-MM-DD", null);
+
+// A leap date on the wrong year would ideally catch this as wrong, but we can't validate other timezones
+testParse(
+  "29 on non leap year with timzeone",
+  "2019-02-29 00:00:00Z",
+  "YYYY-MM-DD HH:mm:ssZ",
+  new Date(Date.UTC(2019, 2, 1))
+);
 testParse(
   "month out of range with too many digits",
   "2016-1234-12",
@@ -308,6 +317,13 @@ testParse(
   fecha.format(new Date(Date.UTC(1998, 3, 7, 14, 32, 7)), "isoDateTime"),
   "isoDateTime",
   new Date(Date.UTC(1998, 3, 7, 14, 32, 7))
+);
+
+testParse(
+  "Daylights savings time in US. Should not affect UTC",
+  "2022-03-13T02:00:00Z",
+  "YYYY-MM-DDTHH:mm:ssZ",
+  new Date(Date.UTC(2022, 2, 13, 2, 0, 0))
 );
 
 test.beforeEach(() => {

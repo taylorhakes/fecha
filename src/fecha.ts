@@ -449,52 +449,70 @@ function parse(
     dateInfo.hour = 0;
   }
 
-  const dateWithoutTZ: Date = new Date(
-    dateInfo.year,
-    dateInfo.month,
-    dateInfo.day,
-    dateInfo.hour,
-    dateInfo.minute,
-    dateInfo.second,
-    dateInfo.millisecond
-  );
+  let dateTZ: Date;
+  if (dateInfo.timezoneOffset == null) {
+    dateTZ = new Date(
+      dateInfo.year,
+      dateInfo.month,
+      dateInfo.day,
+      dateInfo.hour,
+      dateInfo.minute,
+      dateInfo.second,
+      dateInfo.millisecond
+    );
+    const validateFields: [
+      "month" | "day" | "hour" | "minute" | "second",
+      "getMonth" | "getDate" | "getHours" | "getMinutes" | "getSeconds"
+    ][] = [
+      ["month", "getMonth"],
+      ["day", "getDate"],
+      ["hour", "getHours"],
+      ["minute", "getMinutes"],
+      ["second", "getSeconds"]
+    ];
+    for (let i = 0, len = validateFields.length; i < len; i++) {
+      // Check to make sure the date field is within the allowed range. Javascript dates allows values
+      // outside the allowed range. If the values don't match the value was invalid
+      if (
+        specifiedFields[validateFields[i][0]] &&
+        dateInfo[validateFields[i][0]] !== dateTZ[validateFields[i][1]]()
+      ) {
+        return null;
+      }
+    }
+  } else {
+    dateTZ = new Date(
+      Date.UTC(
+        dateInfo.year,
+        dateInfo.month,
+        dateInfo.day,
+        dateInfo.hour,
+        dateInfo.minute - dateInfo.timezoneOffset,
+        dateInfo.second,
+        dateInfo.millisecond
+      )
+    );
 
-  const validateFields: [
-    "month" | "day" | "hour" | "minute" | "second",
-    "getMonth" | "getDate" | "getHours" | "getMinutes" | "getSeconds"
-  ][] = [
-    ["month", "getMonth"],
-    ["day", "getDate"],
-    ["hour", "getHours"],
-    ["minute", "getMinutes"],
-    ["second", "getSeconds"]
-  ];
-  for (let i = 0, len = validateFields.length; i < len; i++) {
-    // Check to make sure the date field is within the allowed range. Javascript dates allows values
-    // outside the allowed range. If the values don't match the value was invalid
+    // We can't validate dates in another timezone unfortunately. Do a basic check instead
     if (
-      specifiedFields[validateFields[i][0]] &&
-      dateInfo[validateFields[i][0]] !== dateWithoutTZ[validateFields[i][1]]()
+      dateInfo.month > 11 ||
+      dateInfo.month < 0 ||
+      dateInfo.day > 31 ||
+      dateInfo.day < 1 ||
+      dateInfo.hour > 23 ||
+      dateInfo.hour < 0 ||
+      dateInfo.minute > 59 ||
+      dateInfo.minute < 0 ||
+      dateInfo.second > 59 ||
+      dateInfo.second < 0
     ) {
       return null;
     }
   }
 
-  if (dateInfo.timezoneOffset == null) {
-    return dateWithoutTZ;
-  }
+  // Don't allow invalid dates
 
-  return new Date(
-    Date.UTC(
-      dateInfo.year,
-      dateInfo.month,
-      dateInfo.day,
-      dateInfo.hour,
-      dateInfo.minute - dateInfo.timezoneOffset,
-      dateInfo.second,
-      dateInfo.millisecond
-    )
-  );
+  return dateTZ;
 }
 export default {
   format,
