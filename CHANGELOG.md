@@ -1,3 +1,6 @@
+### 4.2.3
+- Fixed bug with UTC date on daylights savings time #94
+
 ### 4.2.1
 - Fixed missing source map
 - Fixed security y18n
