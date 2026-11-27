@@ -497,6 +497,18 @@ testFormat(
   "01"
 );
 testFormat("milliseconds long", new Date(2001, 2, 5, 6, 7, 2, 5), "SSS", "005");
+testFormat(
+  "fractional seconds use the requested number of digits",
+  new Date(2001, 2, 5, 6, 7, 2, 999),
+  "ss.S ss.SS ss.SSS",
+  "02.9 02.99 02.999"
+);
+testFormat(
+  "fractional seconds keep leading zeroes",
+  new Date(2001, 2, 5, 6, 7, 2, 59),
+  "S SS SSS",
+  "0 05 059"
+);
 
 // AM PM
 testFormat("ampm am", new Date(2001, 2, 5, 3, 7, 2, 5), "a", "am");
