@@ -169,9 +169,9 @@ const formatFlags: Record<
   s: (dateObj: Date): string => String(dateObj.getSeconds()),
   ss: (dateObj: Date): string => pad(dateObj.getSeconds()),
   S: (dateObj: Date): string =>
-    String(Math.round(dateObj.getMilliseconds() / 100)),
+    String(Math.floor(dateObj.getMilliseconds() / 100)),
   SS: (dateObj: Date): string =>
-    pad(Math.round(dateObj.getMilliseconds() / 10), 2),
+    pad(Math.floor(dateObj.getMilliseconds() / 10), 2),
   SSS: (dateObj: Date): string => pad(dateObj.getMilliseconds(), 3),
   a: (dateObj: Date, i18n: I18nSettings): string =>
     dateObj.getHours() < 12 ? i18n.amPm[0] : i18n.amPm[1],
